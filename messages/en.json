@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "title": "Frameless — Financial Freedom Without Borders",
+    "description": "Crypto-native super app for digital nomads. Virtual cards, bookings, and eSIM powered by stablecoins."
+  },
+  "hero": {
+    "title": "Your Capital. Your Freedom.",
+    "subtitle": "A unified financial ecosystem for life without borders. Manage virtual cards, book hotels, and activate eSIM with USDT/USDC stablecoins.",
+    "cta": "Get Early Access",
+    "placeholder": "Enter your email"
+  },
+  "trust": {
+    "regulated": "VARA Regulated",
+    "compliant": "MiCA Ready"
+  },
+  "nav": {
+    "features": "Features",
+    "security": "Security",
+    "about": "About"
+  },
+  "footer": {
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "aml": "AML/KYC Policy",
+    "rights": "All rights reserved"
+  }
+}
