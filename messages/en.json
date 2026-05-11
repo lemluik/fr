@@ -6,114 +6,138 @@
   "nav": {
     "features": "Features",
     "security": "Security",
-    "about": "About"
+    "about": "For Whom",
+    "cta": "Get Access"
   },
   "hero": {
-    "title": "Your Capital. Your Freedom.",
-    "subtitle": "A unified financial ecosystem for life without borders. Manage virtual cards, book hotels, and activate eSIM with USDT/USDC stablecoins — no hidden conversion fees.",
+    "badge": "Now in private beta",
+    "titleLine1": "Your Capital.",
+    "titleLine2": "Your Freedom.",
+    "subtitle": "A unified financial ecosystem for life without borders. Manage virtual cards, book hotels, and activate eSIM — all powered by USDT/USDC with zero hidden conversion fees.",
     "cta": "Get Early Access",
     "placeholder": "Enter your email",
-    "privacy": "We respect your privacy. No spam, ever."
+    "privacy": "No spam. Unsubscribe anytime.",
+    "stat1": "Countries covered",
+    "stat2": "Hidden fees",
+    "stat3": "Global support"
   },
   "trust": {
+    "heading": "Trusted infrastructure",
     "regulated": "VARA Regulated",
     "compliant": "MiCA Ready"
   },
   "ecosystem": {
+    "label": "Ecosystem",
     "title": "One App. Everything You Need.",
-    "subtitle": "Three pillars of borderless life in a single super app.",
+    "subtitle": "Three pillars of borderless life — banking, travel, and connectivity — united in a single super app with no compromises.",
     "cards": {
       "banking": {
         "title": "Banking & Cards",
         "description": "Forget P2P exchangers. Instant stablecoin transactions at any store worldwide via virtual Visa/Mastercard.",
-        "feature1": "Virtual & physical cards in USDT/USDC",
-        "feature2": "Apple Pay & Google Pay ready",
-        "feature3": "Zero hidden FX spreads"
+        "highlight": "Zero hidden FX spreads",
+        "feature1": "Virtual & physical cards funded with USDT/USDC",
+        "feature2": "Apple Pay & Google Pay integration",
+        "feature3": "Instant card issuance in under 30 seconds"
       },
       "travel": {
         "title": "Travel & Bookings",
-        "description": "Access wholesale Net-Rate prices on 180,000+ hotels. Save up to 25% vs retail aggregators.",
-        "feature1": "Flights via Duffel API integration",
-        "feature2": "Hotels at wholesale prices via Hotelbeds"
+        "description": "Access wholesale Net-Rate pricing on 180,000+ hotels worldwide. Why pay retail when you can pay wholesale?",
+        "highlight": "Save up to 25% vs Booking.com",
+        "feature1": "180,000+ hotels at wholesale Net-Rate prices",
+        "feature2": "Flights via Duffel API with stablecoin payments",
+        "feature3": "Integrated trip planning and expense tracking"
       },
       "connectivity": {
-        "title": "Global Connectivity",
-        "description": "eSIM for 200+ countries. Instant activation upon landing — no roaming, no SIM swap.",
-        "feature1": "Instant eSIM provisioning via CELITECH",
-        "feature2": "Pay in stablecoins, activate in seconds"
+        "title": "Global eSIM",
+        "description": "Internet in 200+ countries activates instantly upon landing. No roaming charges, no SIM swap, no hassle.",
+        "highlight": "Instant activation in 200+ countries",
+        "feature1": "One-tap eSIM provisioning via CELITECH",
+        "feature2": "Pay in stablecoins at competitive data rates",
+        "feature3": "Auto-connect when landing in a new country"
       }
     }
   },
   "security": {
     "title": "Invisible Complexity",
-    "subtitle": "Enterprise-grade security with consumer-grade simplicity.",
-    "toggleUser": "User Mode",
+    "subtitle": "Enterprise-grade security with the simplicity of a consumer app. Your assets are protected by cutting-edge cryptography.",
+    "toggleUser": "User Experience",
     "toggleTech": "Under the Hood",
     "userTitle": "Simple & Secure",
-    "userItem1": "Biometric authentication — FaceID or fingerprint",
-    "userItem2": "One-tap transactions, no seed phrases to manage",
-    "userItem3": "Instant card freeze & real-time notifications",
+    "userSubtitle": "You see simplicity. We handle the complexity behind the scenes.",
+    "userFeature1Title": "Biometric Auth",
+    "userFeature1Desc": "FaceID or fingerprint — no passwords to remember",
+    "userFeature2Title": "One-Tap Send",
+    "userFeature2Desc": "No seed phrases, no complex addresses",
+    "userFeature3Title": "Instant Alerts",
+    "userFeature3Desc": "Real-time notifications for every transaction",
     "techTitle": "MPC Wallet Architecture",
+    "techSubtitle": "Threshold Signature Scheme splits your private key across isolated environments.",
     "techKey1": "Key Shard 1",
-    "techKey1Desc": "Secure Enclave on device",
+    "techKey1Desc": "Secure Enclave on your device",
     "techKey2": "Key Shard 2",
-    "techKey2Desc": "AWS Nitro Enclaves",
-    "techKey3": "Compliance",
+    "techKey2Desc": "AWS Nitro Enclaves (isolated)",
+    "techKey3": "Compliance Layer",
     "techKey3Desc": "Chainalysis KYT + Travel Rule",
-    "techDescription": "TSS (Threshold Signature Scheme) splits your private key across multiple secure environments. No single point of failure — not even Frameless can access your assets without your device."
+    "techDescription": "No single point of failure. Not even Frameless can access your assets without your device's biometric confirmation. Full non-custodial architecture with institutional-grade compliance."
   },
   "personas": {
     "title": "Built For Your Lifestyle",
-    "subtitle": "Whether you code from Bali or run a business from Dubai — Frameless adapts to you.",
+    "subtitle": "Whether you code from Bali or run a business from Dubai — Frameless adapts to your unique needs.",
     "tabs": {
       "it": {
         "label": "IT Professional",
         "title": "Focus on Code, Not Banking",
-        "description": "Manage subscriptions, premium co-working access, and instant eSIM activation in every new city.",
-        "feature1": "Auto-pay for SaaS subscriptions in USDC",
+        "description": "Manage global subscriptions, access premium co-working spaces, and get instant connectivity in every new city without touching a bank branch.",
+        "feature1": "Auto-pay SaaS subscriptions in USDC",
         "feature2": "Premium co-working network access",
         "feature3": "eSIM auto-switch between countries"
       },
       "crypto": {
         "label": "Crypto Entrepreneur",
         "title": "Protect & Grow Your Portfolio",
-        "description": "Tax residency guidance, asset protection from inflation, and international school access in top hubs.",
+        "description": "Optimize tax residency, protect assets from inflation, and provide your family with seamless access to international services — all from one app.",
         "feature1": "Multi-currency portfolio dashboard",
-        "feature2": "Tax optimization insights per jurisdiction",
-        "feature3": "Family cards with spending limits"
+        "feature2": "Tax optimization insights by jurisdiction",
+        "feature3": "Family cards with configurable limits"
       },
       "nomad": {
         "label": "Web3 Nomad",
-        "title": "Fiat-Free Lifestyle",
-        "description": "Live entirely on crypto. No bank restrictions, DeFi protocol access, and zero-friction spending.",
-        "feature1": "Direct DeFi ↔ card bridge",
-        "feature2": "P2P without intermediaries",
-        "feature3": "No banking KYC gatekeeping"
+        "title": "True Fiat-Free Lifestyle",
+        "description": "Live entirely on crypto without bank restrictions. Direct DeFi access, zero-friction spending, and complete financial sovereignty.",
+        "feature1": "Direct DeFi-to-card bridge",
+        "feature2": "P2P transfers without intermediaries",
+        "feature3": "No traditional banking gatekeeping"
       },
       "freelancer": {
         "label": "Freelancer",
-        "title": "Maximize Every Dollar",
-        "description": "Transparent commissions, cost-of-life optimization tools, and geo-arbitrage calculator.",
-        "feature1": "Transparent fee structure — no hidden costs",
+        "title": "Maximize Every Dollar Earned",
+        "description": "Transparent commissions, powerful cost-of-life tools, and instant invoice payments. Keep more of what you earn.",
+        "feature1": "Transparent fees — no hidden costs ever",
         "feature2": "Cost-of-living comparison tools",
         "feature3": "Instant invoice payments in stablecoins"
       }
     }
   },
   "finalCta": {
-    "title": "Stop Losing Money on Fees",
-    "subtitle": "Join the waitlist and start living without borders.",
-    "cta": "Join Waitlist",
+    "title": "Stop Losing Money on Fees & Borders",
+    "subtitle": "Join thousands of digital nomads who chose financial freedom. Your borderless life starts with one email.",
+    "cta": "Join the Waitlist",
     "placeholder": "Enter your email",
-    "urgency": "Limited beta access — 200 spots remaining"
+    "urgency": "Limited beta — 200 spots remaining"
   },
   "footer": {
-    "tagline": "Financial freedom without borders",
+    "tagline": "The financial super app for digital nomads. Banking, travel, and connectivity — powered by stablecoins.",
+    "product": "Product",
+    "productCards": "Virtual Cards",
+    "productTravel": "Travel Bookings",
+    "productEsim": "Global eSIM",
+    "productSecurity": "MPC Security",
     "legal": "Legal",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "aml": "AML/KYC Policy",
     "social": "Community",
-    "rights": "All rights reserved"
+    "rights": "All rights reserved.",
+    "disclaimer": "Regulated by VARA (UAE). MiCA compliant."
   }
 }

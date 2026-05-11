@@ -6,6 +6,9 @@
   --primary: #4a6cf7;
   --primary-end: #6c5ce7;
   --success: #1e6f6b;
+  --surface: #ffffff;
+  --border: #e4e4e7;
+  --muted: #71717a;
 }
 
 @theme inline {
@@ -21,36 +24,73 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Hero gradient orbs */
-.hero-orb {
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hero gradient background */
+.hero-bg {
+  position: relative;
+  background: linear-gradient(180deg, #f0f4ff 0%, #f9fafb 60%, #f9fafb 100%);
+}
+
+.hero-bg::before {
+  content: "";
   position: absolute;
-  border-radius: 9999px;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(74, 108, 247, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 80% 30%, rgba(108, 92, 231, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 50% 80%, rgba(30, 111, 107, 0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
-.hero-orb-1 {
-  top: -5rem;
-  right: -5rem;
-  width: 24rem;
-  height: 24rem;
-  background: radial-gradient(circle, rgba(74, 108, 247, 0.25) 0%, transparent 70%);
-  filter: blur(80px);
+/* Card shine effect */
+.card-shine {
+  background: linear-gradient(135deg, #4a6cf7 0%, #6c5ce7 50%, #4a6cf7 100%);
+  background-size: 200% 200%;
 }
 
-.hero-orb-2 {
-  bottom: -2rem;
-  left: 20%;
-  width: 20rem;
-  height: 20rem;
-  background: radial-gradient(circle, rgba(108, 92, 231, 0.2) 0%, transparent 70%);
-  filter: blur(80px);
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.hero-orb-3 {
-  top: 30%;
-  right: 25%;
-  width: 16rem;
-  height: 16rem;
-  background: radial-gradient(circle, rgba(30, 111, 107, 0.15) 0%, transparent 70%);
-  filter: blur(80px);
+/* Section divider */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e4e4e7, transparent);
+}
+
+/* Feature card hover */
+.feature-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(74, 108, 247, 0.1), 0 8px 16px -8px rgba(0,0,0,0.06);
+}
+
+/* Persona card */
+.persona-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Trust logo */
+.trust-logo {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.trust-logo:hover {
+  opacity: 0.8;
+}
+
+/* Navbar backdrop */
+.navbar-blur {
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
 }
