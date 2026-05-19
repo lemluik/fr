@@ -110,6 +110,16 @@ export function SecurityToggle() {
             </div>
           </div>
         )}
+
+        {/* CTA */}
+        <div className="mt-8 text-center">
+          <a
+            href="#cta"
+            className="inline-flex items-center gap-2 text-sm font-medium text-[#4A6CF7] transition-colors hover:text-[#6C5CE7]"
+          >
+            {t("cta")} →
+          </a>
+        </div>
       </div>
     </div>
   );

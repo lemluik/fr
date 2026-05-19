@@ -57,8 +57,8 @@ export function PersonaTabs() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-3 sm:grid-cols-3">
-          {[1, 2, 3].map((i) => (
+        <div className="mt-8 grid gap-3 sm:grid-cols-2">
+          {[1, 2, 3, 4].map((i) => (
             <div key={i} className="rounded-xl border border-zinc-100 bg-zinc-50/50 p-4">
               <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-[#4A6CF7]/10">
                 <svg className="h-4 w-4 text-[#4A6CF7]" fill="currentColor" viewBox="0 0 20 20">
@@ -68,6 +68,16 @@ export function PersonaTabs() {
               <p className="text-sm text-zinc-700">{t(`tabs.${active}.feature${i}`)}</p>
             </div>
           ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-8 text-center">
+          <a
+            href="#cta"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#4A6CF7] to-[#6C5CE7] px-6 py-2.5 text-sm font-medium text-white transition-all hover:shadow-lg hover:shadow-indigo-200"
+          >
+            {t("cta", { role: t(`tabs.${active}.label`) })}
+          </a>
         </div>
       </div>
     </div>

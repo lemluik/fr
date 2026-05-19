@@ -5,31 +5,56 @@
   },
   "nav": {
     "features": "Features",
+    "howItWorks": "How It Works",
     "security": "Security",
-    "about": "For Whom",
-    "cta": "Get Access"
+    "faq": "FAQ",
+    "cta": "Get Early Access",
+    "menu": "Menu",
+    "close": "Close"
   },
   "hero": {
     "badge": "Now in private beta",
-    "titleLine1": "Your Capital.",
-    "titleLine2": "Your Freedom.",
-    "subtitle": "A unified financial ecosystem for life without borders. Manage virtual cards, book hotels, and activate eSIM — all powered by USDT/USDC with zero hidden conversion fees.",
+    "titleLine1": "Bank, Travel & Earn Crypto",
+    "titleLine2": "One App for Digital Nomads",
+    "subtitle": "IBAN + debit card + DeFi yield + travel booking. Zero FX fees, 200+ countries, one tap.",
     "cta": "Get Early Access",
+    "ctaSecondary": "Watch Demo",
     "placeholder": "Enter your email",
     "privacy": "No spam. Unsubscribe anytime.",
-    "stat1": "Countries covered",
-    "stat2": "Hidden fees",
-    "stat3": "Global support"
+    "stat1": "Countries",
+    "stat2": "FX Fee",
+    "stat3": "Support",
+    "appBadge": "Coming Soon"
   },
   "trust": {
     "heading": "Trusted infrastructure",
     "regulated": "VARA Regulated",
-    "compliant": "MiCA Ready"
+    "regulatedDesc": "Licensed virtual asset regulator, UAE",
+    "compliant": "MiCA Ready",
+    "compliantDesc": "EU crypto-asset regulation compliant",
+    "safeguarded": "Funds Safeguarded",
+    "safeguardedDesc": "Under EU e-money directive",
+    "audited": "Smart Contract Audited",
+    "auditedDesc": "By leading security firms"
+  },
+  "howItWorks": {
+    "label": "How It Works",
+    "title": "Start in 4 Simple Steps",
+    "subtitle": "From sign-up to your first booking — under 5 minutes.",
+    "step1Title": "Sign Up",
+    "step1Desc": "Open an account in 2 minutes. Facial verification, no paperwork.",
+    "step2Title": "Fund",
+    "step2Desc": "Deposit via SEPA, crypto transfer, or debit card.",
+    "step3Title": "Earn",
+    "step3Desc": "Auto-compound DeFi vaults. Stake ETH, BTC, and stablecoins.",
+    "step4Title": "Spend & Travel",
+    "step4Desc": "Use your card worldwide at 0% FX. Book flights & hotels in-app."
   },
   "ecosystem": {
     "label": "Ecosystem",
     "title": "One App. Everything You Need.",
     "subtitle": "Three pillars of borderless life — banking, travel, and connectivity — united in a single super app with no compromises.",
+    "cta": "Learn more",
     "cards": {
       "banking": {
         "title": "Banking & Cards",
@@ -78,11 +103,13 @@
     "techKey2Desc": "AWS Nitro Enclaves (isolated)",
     "techKey3": "Compliance Layer",
     "techKey3Desc": "Chainalysis KYT + Travel Rule",
-    "techDescription": "No single point of failure. Not even Frameless can access your assets without your device's biometric confirmation. Full non-custodial architecture with institutional-grade compliance."
+    "techDescription": "No single point of failure. Not even Frameless can access your assets without your device's biometric confirmation. Full non-custodial architecture with institutional-grade compliance.",
+    "cta": "Your keys, your crypto"
   },
   "personas": {
     "title": "Built For Your Lifestyle",
     "subtitle": "Whether you code from Bali or run a business from Dubai — Frameless adapts to your unique needs.",
+    "cta": "Start as {role}",
     "tabs": {
       "it": {
         "label": "IT Professional",
@@ -90,7 +117,8 @@
         "description": "Manage global subscriptions, access premium co-working spaces, and get instant connectivity in every new city without touching a bank branch.",
         "feature1": "Auto-pay SaaS subscriptions in USDC",
         "feature2": "Premium co-working network access",
-        "feature3": "eSIM auto-switch between countries"
+        "feature3": "eSIM auto-switch between countries",
+        "feature4": "Multi-currency IBAN for global employers"
       },
       "crypto": {
         "label": "Crypto Entrepreneur",
@@ -98,7 +126,8 @@
         "description": "Optimize tax residency, protect assets from inflation, and provide your family with seamless access to international services — all from one app.",
         "feature1": "Multi-currency portfolio dashboard",
         "feature2": "Tax optimization insights by jurisdiction",
-        "feature3": "Family cards with configurable limits"
+        "feature3": "Family cards with configurable limits",
+        "feature4": "Borrow against crypto — no selling needed"
       },
       "nomad": {
         "label": "Web3 Nomad",
@@ -106,7 +135,8 @@
         "description": "Live entirely on crypto without bank restrictions. Direct DeFi access, zero-friction spending, and complete financial sovereignty.",
         "feature1": "Direct DeFi-to-card bridge",
         "feature2": "P2P transfers without intermediaries",
-        "feature3": "No traditional banking gatekeeping"
+        "feature3": "No traditional banking gatekeeping",
+        "feature4": "Travel booking with 100+ cryptocurrencies"
       },
       "freelancer": {
         "label": "Freelancer",
@@ -114,13 +144,36 @@
         "description": "Transparent commissions, powerful cost-of-life tools, and instant invoice payments. Keep more of what you earn.",
         "feature1": "Transparent fees — no hidden costs ever",
         "feature2": "Cost-of-living comparison tools",
-        "feature3": "Instant invoice payments in stablecoins"
+        "feature3": "Instant invoice payments in stablecoins",
+        "feature4": "SEPA IBAN for EU client payments"
       }
     }
   },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know before joining the waitlist.",
+    "q1": "Is my crypto safe?",
+    "a1": "Frameless uses a non-custodial MPC wallet — your private key is split between your device's Secure Enclave and AWS Nitro Enclaves. Not even Frameless can access your assets without your biometric confirmation. No seed phrases to lose.",
+    "q2": "What countries are supported?",
+    "a2": "The virtual card works in 200+ countries at 100M+ merchants worldwide. The EUR IBAN supports SEPA transfers across 30+ EEA countries. Travel booking covers 180,000+ hotels globally.",
+    "q3": "How is Frameless different from Revolut or Wise?",
+    "a3": "Revolut and Wise are fiat-first — crypto is an add-on. Frameless is crypto-native: your balance earns DeFi yield, you can borrow against crypto without selling, and travel booking accepts 100+ cryptocurrencies. Plus, non-custodial wallet means you control your keys.",
+    "q4": "Do I need to pass KYC?",
+    "a4": "Frameless uses tiered verification. Basic wallet features require minimal verification. For the debit card and IBAN, standard KYC applies — facial recognition takes about 2 minutes.",
+    "q5": "What are the fees?",
+    "a5": "0% FX on EUR and USD transactions. Crypto transactions via the card have zero spread. Travel bookings carry no hidden markups — you pay wholesale Net-Rate prices.",
+    "q6": "Can I use Apple Pay and Google Pay?",
+    "a6": "Yes. The Frameless card integrates with both Apple Pay and Google Pay for contactless payments worldwide.",
+    "q7": "How does the travel booking work?",
+    "a7": "We integrate with 9+ travel API providers (Duffel for flights, Hotelbeds and Expedia for hotels, 12Go for ground transport). Pay with stablecoins or from your card balance. Prices are wholesale — up to 25% cheaper than Booking.com.",
+    "q8": "Is Frameless regulated?",
+    "a8": "Frameless operates under a VARA (Virtual Assets Regulatory Authority, UAE) license and is MiCA-compliant for EU operations. Client funds are safeguarded under the EU e-money directive.",
+    "q9": "When can I start using Frameless?",
+    "a9": "We're currently in private beta with limited spots. Join the waitlist for early access — beta users get lifetime fee discounts."
+  },
   "finalCta": {
     "title": "Stop Losing Money on Fees & Borders",
-    "subtitle": "Join thousands of digital nomads who chose financial freedom. Your borderless life starts with one email.",
+    "subtitle": "Join thousands of digital nomads who chose financial freedom. Your borderless life starts with one tap.",
     "cta": "Join the Waitlist",
     "placeholder": "Enter your email",
     "urgency": "Limited beta — 200 spots remaining"
