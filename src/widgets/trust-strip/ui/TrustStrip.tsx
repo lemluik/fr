@@ -1,44 +1,5 @@
 import { useTranslations } from "next-intl";
 
-function MastercardLogo() {
-  return (
-    <svg viewBox="0 0 48 32" className="h-8" fill="none">
-      <circle cx="16" cy="16" r="12" fill="#EB001B" opacity="0.9"/>
-      <circle cx="32" cy="16" r="12" fill="#F79E1B" opacity="0.9"/>
-      <path d="M24 6.4a12 12 0 010 19.2 12 12 0 000-19.2z" fill="#FF5F00" opacity="0.9"/>
-    </svg>
-  );
-}
-
-function VisaLogo() {
-  return (
-    <svg viewBox="0 0 48 16" className="h-5" fill="none">
-      <path d="M18.5 15.5h-4L17.5.5h4l-3 15zm-8.3 0L6.1 5.3l-.4 1.8C4.5 9.8 2.3 12.5 0 13.7l3.2 1.8h4.7l2.3-15h-4l-3 15z" fill="#fff"/>
-      <path d="M45.5.5h-3.4c-1.1 0-1.9.3-2.4 1.4L33 15.5h4.3l.9-2.3h5.2l.5 2.3H48L45.5.5zm-5.2 9.8l2-5.4 1.1 5.4h-3.1zM32.7.5L28.8 11l-.4-2.2c-.8-2.8-3.3-5.8-6.1-7.3l3.5 13.5h4.3L37 .5h-4.3z" fill="#fff"/>
-      <path d="M21.5.5h-6.6l-.1.3c5.1 1.2 8.5 4.3 9.9 7.9L23.3 2c-.3-1-.9-1.4-1.8-1.5z" fill="#F9A51A"/>
-    </svg>
-  );
-}
-
-function ApplePayLogo() {
-  return (
-    <svg viewBox="0 0 56 22" className="h-5" fill="currentColor">
-      <path d="M12.6 5.3c-.4.5-1 .9-1.6.8-.1-.6.2-1.2.5-1.6.5-.5 1.1-.8 1.7-.8.1.6-.2 1.3-.6 1.6zm.5.9c-.8-.5-1.4-.1-2 .5-.3.3-.5.6-.7 1 .7.2 1.4 0 2-.4.6-.5.9-1.1.7-1.1zm6.3 8.8c-.5 1.1-1.1 2.2-2 2.2-.8.1-1.1-.4-2-.4-1 0-1.3.5-2.1.5-.8 0-1.4-1-2-2.1-1.2-2.2-.7-5.4 1-6.3.1 0 .2-.1.3-.1.8 0 1.5.6 2 .6.5 0 1-.5 1.8-.5.9 0 1.3.5 2.1.5.5 0 1-.3 1.5-.9.6-.7.9-1.3.9-1.3s-1.3-.6-1.3-2.2c0-1.3 1.1-2 1.1-2s-.8-1.3-2.2-1.3c-.9 0-1.6.5-2.1.5-.5 0-1.2-.5-2-.5-.9 0-1.7.5-2.2 1.3-.9 1.5-.4 3.8.6 5.1.5.7 1.2 1.4 2 1.4.8 0 1.2-.5 2.1-.5.8 0 1.2.5 2.1.5.8 0 1.4-.7 1.9-1.4-.6-.2-1.1-.7-1.1-.7z"/>
-    </svg>
-  );
-}
-
-function GooglePayLogo() {
-  return (
-    <svg viewBox="0 0 56 22" className="h-5" fill="none">
-      <path d="M8 11c0-.6.1-1.2.2-1.7L3.3 6.3C2.5 7.8 2 9.5 2 11.3c0 1.7.4 3.4 1.2 4.9l4.9-2.9c-.1-.6-.1-1.2-.1-1.7" fill="#4285F4"/>
-      <path d="M16.5 9.3H8.2c.2.6.3 1.2.3 1.8 0 .6-.1 1.2-.3 1.8h8.3c.2-.6.3-1.2.3-1.8 0-.6-.1-1.2-.3-1.8" fill="#E0E0E0"/>
-      <path d="M8 11c0-.6.1-1.2.3-1.8L3.4 6.3C2.5 7.8 2 9.5 2 11.3c0 1.7.4 3.4 1.2 4.9L8 13.3c-.2-.6-.3-1.2-.3-1.8" fill="#34A853"/>
-      <path d="M22 9v5h-1.2v-6.3h1.1v.9c.4-.6 1-.9 1.7-.9.9 0 1.5.4 1.8 1.2.5-.8 1.2-1.2 2.1-1.2 1.2 0 2 .8 2 2.2v4.1h-1.2v-3.8c0-.9-.4-1.4-1.2-1.4-.7 0-1.3.5-1.5 1.3v3.9h-1.2v-3.8c0-.9-.4-1.4-1.2-1.4-.7 0-1.2.5-1.4 1.3z" fill="#9AA0A6"/>
-    </svg>
-  );
-}
-
 function CheckIcon() {
   return (
     <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
@@ -46,6 +7,46 @@ function CheckIcon() {
     </svg>
   );
 }
+
+const PAYMENT_BRANDS = [
+  {
+    name: "VISA",
+    className: "font-black italic tracking-tight text-white text-xl",
+  },
+  {
+    name: "Mastercard",
+    custom: (
+      <span className="flex items-center gap-1">
+        <span className="inline-block h-6 w-6 rounded-full bg-[#EB001B] opacity-90" />
+        <span className="inline-block h-6 w-6 -ml-3 rounded-full bg-[#F79E1B] opacity-90" />
+        <span className="ml-1.5 text-sm font-semibold text-white/70">Mastercard</span>
+      </span>
+    ),
+  },
+  {
+    name: " Pay",
+    custom: (
+      <span className="flex items-center gap-0.5 text-sm font-semibold text-white/70">
+        <svg className="h-4 w-4 text-white/60" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.4c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        Pay
+      </span>
+    ),
+  },
+  {
+    name: "GPay",
+    custom: (
+      <span className="text-sm font-bold text-white/70">
+        <span className="text-[#4285F4]">G</span>
+        <span className="text-[#EA4335]">o</span>
+        <span className="text-[#FBBC05]">o</span>
+        <span className="text-[#4285F4]">g</span>
+        <span className="text-white/50">le Pay</span>
+      </span>
+    ),
+  },
+];
 
 export function TrustStrip() {
   const t = useTranslations("trust");
@@ -63,19 +64,14 @@ export function TrustStrip() {
         <p className="mb-8 text-center text-xs font-semibold uppercase tracking-widest text-[var(--text-3)]">
           {t("heading")}
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
-          <div className="trust-logo flex h-10 items-center justify-center">
-            <VisaLogo />
-          </div>
-          <div className="trust-logo flex h-10 items-center justify-center">
-            <MastercardLogo />
-          </div>
-          <div className="trust-logo flex h-10 items-center justify-center text-[var(--text-2)]">
-            <ApplePayLogo />
-          </div>
-          <div className="trust-logo flex h-10 items-center justify-center">
-            <GooglePayLogo />
-          </div>
+        <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
+          {PAYMENT_BRANDS.map((brand) => (
+            <div key={brand.name} className="trust-logo flex h-10 items-center justify-center">
+              {brand.custom ?? (
+                <span className={brand.className}>{brand.name}</span>
+              )}
+            </div>
+          ))}
 
           <span className="hidden h-8 w-px bg-[var(--border-2)] sm:block" />
 
