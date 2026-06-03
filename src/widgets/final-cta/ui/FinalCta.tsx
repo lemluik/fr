@@ -21,10 +21,23 @@ export function FinalCta() {
     setLoading(true);
     setError("");
     try {
+      // Собираем данные из браузера
+      const params = new URLSearchParams(window.location.search);
+      const payload = {
+        email,
+        locale,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        screen_w: window.screen.width,
+        referrer: document.referrer || null,
+        utm_source: params.get("utm_source"),
+        utm_medium: params.get("utm_medium"),
+        utm_campaign: params.get("utm_campaign"),
+      };
+
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, locale }),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (res.ok && data.success) {
