@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SUPABASE_URL = process.env.SUPABASE_URL ?? "https://nkaeqjmcvunyzmjqaigf.supabase.co";
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY ?? "sb_publishable_zOCZqNFC4DqH_Y8DwTFt0A_jH_EgK_P";
-
 export async function POST(req: NextRequest) {
   try {
     const { email, locale } = await req.json();
@@ -11,12 +8,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+    const supabaseUrl = "https://nkaeqjmcvunyzmjqaigf.supabase.co";
+    const supabaseKey = "sb_publishable_zOCZqNFC4DqH_Y8DwTFt0A_jH_EgK_P";
+
+    const res = await fetch(`${supabaseUrl}/rest/v1/waitlist`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "apikey": SUPABASE_SERVICE_KEY,
-        "Authorization": `Bearer ${SUPABASE_SERVICE_KEY}`,
+        "apikey": supabaseKey,
+        "Authorization": `Bearer ${supabaseKey}`,
         "Prefer": "return=minimal",
       },
       body: JSON.stringify({ email: email.toLowerCase().trim(), locale: locale ?? "en" }),
