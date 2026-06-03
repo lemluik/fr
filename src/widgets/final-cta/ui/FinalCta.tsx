@@ -26,10 +26,12 @@ export function FinalCta() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, locale }),
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (res.ok && data.success) {
         setSubmitted(true);
+      } else if (res.status === 409 && data.duplicate) {
+        setError(t("errorDuplicate"));
       } else {
-        const data = await res.json();
         setError(data.error ?? t("errorInvalid"));
       }
     } catch {

@@ -169,6 +169,7 @@
     "placeholder": "Enter your email",
     "urgency": "Beta coming soon — register to be first",
     "errorInvalid": "Please enter a valid email address.",
+    "errorDuplicate": "This email is already registered. You're on the list!",
     "successTitle": "You're registered!",
     "successDesc": "We'll notify you as soon as beta is ready. You'll be first in line."
   },

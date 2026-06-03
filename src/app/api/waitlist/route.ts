@@ -22,9 +22,13 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({ email: email.toLowerCase().trim(), locale: locale ?? "en" }),
     });
 
-    // 409 = дубликат — не ошибка, уже зарегистрирован
-    if (res.ok || res.status === 409) {
+    if (res.ok) {
       return NextResponse.json({ success: true });
+    }
+
+    // 409 = дубликат (unique constraint) — уже зарегистрирован
+    if (res.status === 409) {
+      return NextResponse.json({ duplicate: true }, { status: 409 });
     }
 
     const err = await res.text();
