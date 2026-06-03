@@ -6,12 +6,12 @@ export function Security() {
   const t = useTranslations("security");
 
   return (
-    <Section>
+    <Section id="security">
       <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-[#0F172A] sm:text-4xl">
+        <h2 className="text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">
           {t("title")}
         </h2>
-        <p className="mt-4 text-lg text-zinc-600">
+        <p className="mt-4 text-lg text-[var(--text-2)]">
           {t("subtitle")}
         </p>
       </div>

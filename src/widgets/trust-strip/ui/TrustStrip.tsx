@@ -13,8 +13,8 @@ function MastercardLogo() {
 function VisaLogo() {
   return (
     <svg viewBox="0 0 48 16" className="h-5" fill="none">
-      <path d="M18.5 15.5h-4L17.5.5h4l-3 15zm-8.3 0L6.1 5.3l-.4 1.8C4.5 9.8 2.3 12.5 0 13.7l3.2 1.8h4.7l2.3-15h-4l-3 15z" fill="#1A1F71"/>
-      <path d="M45.5.5h-3.4c-1.1 0-1.9.3-2.4 1.4L33 15.5h4.3l.9-2.3h5.2l.5 2.3H48L45.5.5zm-5.2 9.8l2-5.4 1.1 5.4h-3.1zM32.7.5L28.8 11l-.4-2.2c-.8-2.8-3.3-5.8-6.1-7.3l3.5 13.5h4.3L37 .5h-4.3z" fill="#1A1F71"/>
+      <path d="M18.5 15.5h-4L17.5.5h4l-3 15zm-8.3 0L6.1 5.3l-.4 1.8C4.5 9.8 2.3 12.5 0 13.7l3.2 1.8h4.7l2.3-15h-4l-3 15z" fill="#fff"/>
+      <path d="M45.5.5h-3.4c-1.1 0-1.9.3-2.4 1.4L33 15.5h4.3l.9-2.3h5.2l.5 2.3H48L45.5.5zm-5.2 9.8l2-5.4 1.1 5.4h-3.1zM32.7.5L28.8 11l-.4-2.2c-.8-2.8-3.3-5.8-6.1-7.3l3.5 13.5h4.3L37 .5h-4.3z" fill="#fff"/>
       <path d="M21.5.5h-6.6l-.1.3c5.1 1.2 8.5 4.3 9.9 7.9L23.3 2c-.3-1-.9-1.4-1.8-1.5z" fill="#F9A51A"/>
     </svg>
   );
@@ -34,7 +34,7 @@ function GooglePayLogo() {
       <path d="M8 11c0-.6.1-1.2.2-1.7L3.3 6.3C2.5 7.8 2 9.5 2 11.3c0 1.7.4 3.4 1.2 4.9l4.9-2.9c-.1-.6-.1-1.2-.1-1.7" fill="#4285F4"/>
       <path d="M16.5 9.3H8.2c.2.6.3 1.2.3 1.8 0 .6-.1 1.2-.3 1.8h8.3c.2-.6.3-1.2.3-1.8 0-.6-.1-1.2-.3-1.8" fill="#E0E0E0"/>
       <path d="M8 11c0-.6.1-1.2.3-1.8L3.4 6.3C2.5 7.8 2 9.5 2 11.3c0 1.7.4 3.4 1.2 4.9L8 13.3c-.2-.6-.3-1.2-.3-1.8" fill="#34A853"/>
-      <path d="M22 9v5h-1.2v-6.3h1.1v.9c.4-.6 1-.9 1.7-.9.9 0 1.5.4 1.8 1.2.5-.8 1.2-1.2 2.1-1.2 1.2 0 2 .8 2 2.2v4.1h-1.2v-3.8c0-.9-.4-1.4-1.2-1.4-.7 0-1.3.5-1.5 1.3v3.9h-1.2v-3.8c0-.9-.4-1.4-1.2-1.4-.7 0-1.2.5-1.4 1.3z" fill="#5F6368"/>
+      <path d="M22 9v5h-1.2v-6.3h1.1v.9c.4-.6 1-.9 1.7-.9.9 0 1.5.4 1.8 1.2.5-.8 1.2-1.2 2.1-1.2 1.2 0 2 .8 2 2.2v4.1h-1.2v-3.8c0-.9-.4-1.4-1.2-1.4-.7 0-1.3.5-1.5 1.3v3.9h-1.2v-3.8c0-.9-.4-1.4-1.2-1.4-.7 0-1.2.5-1.4 1.3z" fill="#9AA0A6"/>
     </svg>
   );
 }
@@ -58,42 +58,40 @@ export function TrustStrip() {
   ] as const;
 
   return (
-    <section className="border-y border-zinc-100 bg-white py-10">
+    <section className="border-y border-[var(--border)] bg-[var(--bg-2)] py-10">
       <div className="mx-auto max-w-6xl px-6">
-        <p className="mb-8 text-center text-xs font-medium uppercase tracking-widest text-zinc-400">
+        <p className="mb-8 text-center text-xs font-semibold uppercase tracking-widest text-[var(--text-3)]">
           {t("heading")}
         </p>
-        {/* Partner logos */}
         <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
-          <div className="trust-logo flex h-10 items-center justify-center opacity-50 transition-opacity hover:opacity-80">
+          <div className="trust-logo flex h-10 items-center justify-center">
             <VisaLogo />
           </div>
-          <div className="trust-logo flex h-10 items-center justify-center opacity-50 transition-opacity hover:opacity-80">
+          <div className="trust-logo flex h-10 items-center justify-center">
             <MastercardLogo />
           </div>
-          <div className="trust-logo flex h-10 items-center justify-center text-zinc-400 opacity-50 transition-opacity hover:opacity-80">
+          <div className="trust-logo flex h-10 items-center justify-center text-[var(--text-2)]">
             <ApplePayLogo />
           </div>
-          <div className="trust-logo flex h-10 items-center justify-center opacity-50 transition-opacity hover:opacity-80">
+          <div className="trust-logo flex h-10 items-center justify-center">
             <GooglePayLogo />
           </div>
 
-          <span className="hidden h-8 w-px bg-zinc-200 sm:block" />
+          <span className="hidden h-8 w-px bg-[var(--border-2)] sm:block" />
 
-          {/* Compliance badges with descriptions */}
           {badges.map((badge, i) => (
             <div
               key={i}
               className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 ${
                 badge.color === "emerald"
-                  ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                  : "border-blue-200 bg-blue-50 text-blue-700"
+                  ? "border-emerald-500/20 bg-emerald-500/8 text-emerald-400"
+                  : "border-blue-500/20 bg-blue-500/8 text-blue-400"
               }`}
             >
               <CheckIcon />
               <div className="leading-tight">
                 <p className="text-xs font-medium">{badge.label}</p>
-                <p className="text-[10px] opacity-70">{badge.desc}</p>
+                <p className="text-[10px] opacity-60">{badge.desc}</p>
               </div>
             </div>
           ))}

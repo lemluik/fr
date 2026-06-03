@@ -5,6 +5,8 @@ type ButtonProps = {
   variant?: "primary" | "secondary" | "ghost";
   className?: string;
   type?: "button" | "submit";
+  onClick?: () => void;
+  disabled?: boolean;
 };
 
 export function Button({
@@ -12,21 +14,25 @@ export function Button({
   variant = "primary",
   className,
   type = "button",
+  onClick,
+  disabled,
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center font-medium transition-all active:scale-[0.98]";
+    "inline-flex items-center justify-center font-medium transition-all active:scale-[0.97] cursor-pointer select-none";
 
   const variants = {
-    primary:
-      "h-12 rounded-full bg-gradient-to-r from-[#4A6CF7] to-[#6C5CE7] px-8 text-sm text-white hover:shadow-lg hover:shadow-indigo-200",
-    secondary:
-      "h-12 rounded-full border border-zinc-200 bg-white px-8 text-sm text-[#0F172A] hover:border-zinc-300 hover:bg-zinc-50",
-    ghost:
-      "h-10 rounded-lg px-4 text-sm text-zinc-600 hover:bg-zinc-100 hover:text-[#0F172A]",
+    primary:   "btn-primary h-12 px-8 text-sm",
+    secondary: "btn-secondary h-12 px-8 text-sm",
+    ghost:     "h-10 rounded-lg px-4 text-sm text-[var(--text-3)] hover:text-[var(--text-2)] hover:bg-white/5",
   };
 
   return (
-    <button type={type} className={cn(base, variants[variant], className)}>
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={cn(base, variants[variant], disabled && "opacity-50 cursor-not-allowed", className)}
+    >
       {children}
     </button>
   );

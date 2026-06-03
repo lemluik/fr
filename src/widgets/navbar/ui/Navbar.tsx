@@ -35,14 +35,14 @@ export function Navbar() {
 
   return (
     <>
-      <header className="navbar-blur fixed top-0 left-0 right-0 z-50 border-b border-zinc-100/80 bg-white/70">
+      <header className="navbar-blur fixed top-0 left-0 right-0 z-50">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--primary)] to-[var(--primary-end)]">
               <span className="text-sm font-bold text-white">F</span>
             </div>
-            <span className="text-lg font-bold tracking-tight text-[#0F172A]">Frameless</span>
+            <span className="text-lg font-bold tracking-tight text-[var(--text)]">Frameless</span>
           </a>
 
           {/* Desktop nav */}
@@ -51,7 +51,7 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-zinc-600 transition-colors hover:text-[#0F172A]"
+                className="text-sm text-[var(--text-3)] transition-colors hover:text-[var(--text)]"
               >
                 {link.label}
               </a>
@@ -64,7 +64,7 @@ export function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setLangOpen(!langOpen)}
-                className="flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:border-zinc-300 hover:text-[#0F172A]"
+                className="glass flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-[var(--text-2)] transition-all hover:text-[var(--text)]"
               >
                 <span>{currentLocale.flag}</span>
                 <span>{currentLocale.label}</span>
@@ -73,14 +73,14 @@ export function Navbar() {
                 </svg>
               </button>
               {langOpen && (
-                <div className="absolute right-0 top-full mt-2 w-28 rounded-xl border border-zinc-100 bg-white py-1 shadow-lg">
+                <div className="glass-2 absolute right-0 top-full mt-2 w-28 rounded-xl py-1 shadow-xl">
                   {LOCALES.map((l) => (
                     <button
                       key={l.code}
                       onClick={() => { switchLocale(l.code); setLangOpen(false); }}
                       className={cn(
-                        "flex w-full items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-zinc-50",
-                        l.code === locale ? "text-[#4A6CF7] font-medium" : "text-zinc-600"
+                        "flex w-full items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-white/5",
+                        l.code === locale ? "text-[var(--primary)] font-medium" : "text-[var(--text-2)]"
                       )}
                     >
                       <span>{l.flag}</span>
@@ -94,7 +94,7 @@ export function Navbar() {
             {/* Desktop CTA */}
             <a
               href="#cta"
-              className="hidden rounded-full bg-gradient-to-r from-[#4A6CF7] to-[#6C5CE7] px-5 py-2 text-sm font-medium text-white transition-all hover:shadow-lg hover:shadow-indigo-200 sm:inline-flex"
+              className="btn-primary hidden h-9 items-center rounded-full px-5 text-sm sm:inline-flex"
             >
               {t("cta")}
             </a>
@@ -102,7 +102,7 @@ export function Navbar() {
             {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(true)}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 text-zinc-600 md:hidden"
+              className="glass flex h-9 w-9 items-center justify-center rounded-lg text-[var(--text-2)] md:hidden"
               aria-label={t("menu")}
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -115,17 +115,17 @@ export function Navbar() {
 
       {/* Mobile menu overlay */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-[60] bg-white">
-          <div className="flex h-16 items-center justify-between px-6 border-b border-zinc-100">
+        <div className="fixed inset-0 z-[60] bg-[var(--bg)]">
+          <div className="flex h-16 items-center justify-between px-6 border-b border-[var(--border)]">
             <a href="#" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#4A6CF7] to-[#6C5CE7]">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--primary)] to-[var(--primary-end)]">
                 <span className="text-sm font-bold text-white">F</span>
               </div>
-              <span className="text-lg font-bold tracking-tight text-[#0F172A]">Frameless</span>
+              <span className="text-lg font-bold tracking-tight text-[var(--text)]">Frameless</span>
             </a>
             <button
               onClick={() => setMobileOpen(false)}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 text-zinc-600"
+              className="glass flex h-9 w-9 items-center justify-center rounded-lg text-[var(--text-2)]"
               aria-label={t("close")}
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -139,22 +139,22 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-4 py-3 text-base font-medium text-[#0F172A] transition-colors hover:bg-zinc-50"
+                className="rounded-xl px-4 py-3 text-base font-medium text-[var(--text)] transition-colors hover:bg-white/5"
               >
                 {link.label}
               </a>
             ))}
-            <div className="my-4 h-px bg-zinc-100" />
+            <div className="my-4 divider" />
             <div className="flex gap-2 px-4">
               {LOCALES.map((l) => (
                 <button
                   key={l.code}
                   onClick={() => { switchLocale(l.code); setMobileOpen(false); }}
                   className={cn(
-                    "rounded-lg border px-4 py-2 text-sm font-medium transition-colors",
+                    "rounded-lg px-4 py-2 text-sm font-medium transition-all",
                     l.code === locale
-                      ? "border-[#4A6CF7]/20 bg-[#4A6CF7]/5 text-[#4A6CF7]"
-                      : "border-zinc-200 text-zinc-600 hover:border-zinc-300"
+                      ? "bg-[var(--primary)]/10 border border-[var(--primary)]/30 text-[var(--primary)]"
+                      : "glass text-[var(--text-2)]"
                   )}
                 >
                   {l.flag} {l.label}
@@ -164,7 +164,7 @@ export function Navbar() {
             <a
               href="#cta"
               onClick={() => setMobileOpen(false)}
-              className="mt-4 rounded-full bg-gradient-to-r from-[#4A6CF7] to-[#6C5CE7] px-5 py-3 text-center text-base font-medium text-white"
+              className="btn-primary mt-4 rounded-full px-5 py-3 text-center text-base font-medium"
             >
               {t("cta")}
             </a>
