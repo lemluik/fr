@@ -75,7 +75,7 @@ async function sendTelegramNotification(data: {
       text,
       parse_mode: "Markdown",
     }),
-  }).catch(() => {}); // не блокируем ответ если TG недоступен
+  }).catch((e) => console.error("TG error:", e?.message));
 }
 
 function getFlagEmoji(countryCode: string): string {
@@ -168,7 +168,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (res.ok) {
-      sendTelegramNotification({ email: rawEmail, country, city, timezone, locale, utm_source, referrer });
+      await sendTelegramNotification({ email: rawEmail, country, city, timezone, locale, utm_source, referrer });
       return NextResponse.json({ success: true });
     }
 
