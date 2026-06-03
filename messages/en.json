@@ -107,45 +107,36 @@
     "cta": "Your keys, your crypto"
   },
   "personas": {
-    "title": "Built For Your Lifestyle",
-    "subtitle": "Whether you code from Bali or run a business from Dubai — Frameless adapts to your unique needs.",
-    "cta": "Register as {role}",
-    "tabs": {
-      "it": {
-        "label": "IT Professional",
-        "title": "Focus on Code, Not Banking",
-        "description": "Manage global subscriptions, get instant connectivity in every new city, and receive salary in USDC — without touching a bank branch ever again.",
-        "feature1": "Auto-pay SaaS subscriptions in USDC",
-        "feature2": "Multi-currency IBAN for global employers",
-        "feature3": "eSIM auto-switch between countries",
-        "feature4": "Instant card for new country, no paperwork"
+    "title": "Works For Anyone Who Moves",
+    "subtitle": "One account for everyone who earns, spends, or travels across borders.",
+    "scenarios": {
+      "0": {
+        "title": "Pay Anywhere, Instantly",
+        "desc": "Your stablecoin balance becomes a real Visa/Mastercard. Spend at 100M+ merchants worldwide with 0% FX — online or in-store, in any currency.",
+        "feature0": "Virtual card issued in 30 seconds",
+        "feature1": "Zero FX fees on every transaction",
+        "feature2": "Works with Apple Pay & Google Pay"
       },
-      "crypto": {
-        "label": "Crypto Entrepreneur",
-        "title": "Protect & Grow Your Portfolio",
-        "description": "Optimize tax residency, protect assets from inflation, earn DeFi yield on idle stablecoins, and borrow without selling your holdings.",
-        "feature1": "Earn yield on USDC/USDT balance automatically",
-        "feature2": "Borrow against crypto — no selling needed",
-        "feature3": "Family cards with configurable spending limits",
-        "feature4": "Tax optimization insights by jurisdiction"
+      "1": {
+        "title": "Receive & Send Globally",
+        "desc": "Get a real EUR IBAN for SEPA transfers. Receive salary, client payments, or freelance income — then convert or spend instantly.",
+        "feature0": "Personal EUR IBAN via SEPA",
+        "feature1": "Receive in fiat or stablecoins",
+        "feature2": "P2P transfers without intermediaries"
       },
-      "nomad": {
-        "label": "Digital Nomad",
-        "title": "True Borderless Life",
-        "description": "Live on crypto without restrictions. Spend at any store, book travel wholesale, connect instantly in 200+ countries — complete financial sovereignty.",
-        "feature1": "Spend crypto at 100M+ merchants worldwide",
-        "feature2": "Travel bookings at wholesale prices",
-        "feature3": "eSIM in 200+ countries, instant activation",
-        "feature4": "P2P transfers without intermediaries"
+      "2": {
+        "title": "Travel Without the Markup",
+        "desc": "Book flights, hotels and ground transport at wholesale Net-Rate prices — pay with your balance. No Booking.com markups, ever.",
+        "feature0": "180,000+ hotels at wholesale prices",
+        "feature1": "Flights via Duffel API — pay in USDC",
+        "feature2": "Instant eSIM in 200+ countries on arrival"
       },
-      "freelancer": {
-        "label": "Freelancer",
-        "title": "Keep More of What You Earn",
-        "description": "Get paid in stablecoins instantly, spend with zero FX fees, and manage your financial life from one app — no hidden costs ever.",
-        "feature1": "SEPA IBAN — receive payments from EU clients",
-        "feature2": "Zero FX fees on all card transactions",
-        "feature3": "Instant invoice payments in stablecoins",
-        "feature4": "Cost-of-living tools for location decisions"
+      "3": {
+        "title": "Your Crypto Earns While You Sleep",
+        "desc": "Idle stablecoins generate DeFi yield automatically. Borrow against your holdings without selling — stay invested, stay liquid.",
+        "feature0": "Auto-yield on USDC/USDT balance",
+        "feature1": "Borrow against crypto, no selling needed",
+        "feature2": "Non-custodial MPC — your keys, your assets"
       }
     }
   },
