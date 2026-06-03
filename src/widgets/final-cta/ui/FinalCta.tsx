@@ -8,6 +8,7 @@ export function FinalCta() {
   const t = useTranslations("finalCta");
   const locale = useLocale();
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -25,6 +26,7 @@ export function FinalCta() {
       const params = new URLSearchParams(window.location.search);
       const payload = {
         email,
+        website: honeypot, // honeypot — сервер отклонит если заполнен
         locale,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         screen_w: window.screen.width,
@@ -90,6 +92,17 @@ export function FinalCta() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+            {/* Honeypot — скрыто от людей, боты заполняют автоматически */}
+            <input
+              type="text"
+              name="website"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ display: "none" }}
+            />
             <Input
               placeholder={t("placeholder")}
               value={email}
