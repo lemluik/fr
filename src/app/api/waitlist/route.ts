@@ -40,7 +40,53 @@ function sanitizeInt(val: unknown): number | null {
   return isNaN(n) || n < 0 || n > 10000 ? null : n;
 }
 
-// ─── Handler ──────────────────────────────────────────────────────────────────
+// ─── Telegram уведомление ─────────────────────────────────────────────────────
+const TG_BOT_TOKEN = "8834507209:AAGV02HQsOd2F3F-rrJfzIIQmQvTNe3Q40Q";
+const TG_CHAT_ID   = "5757340085";
+
+async function sendTelegramNotification(data: {
+  email: string;
+  country: string | null;
+  city: string | null;
+  timezone: string | null;
+  locale: string;
+  utm_source: string | null;
+  referrer: string | null;
+}) {
+  const flag = data.country ? getFlagEmoji(data.country) : "🌍";
+  const location = [data.city, data.country].filter(Boolean).join(", ") || "неизвестно";
+  const source = data.utm_source ?? (data.referrer ? new URL(data.referrer.startsWith("http") ? data.referrer : `https://${data.referrer}`).hostname : "прямой заход");
+
+  const text = [
+    `🎯 *Новая регистрация в waitlist*`,
+    ``,
+    `📧 \`${data.email}\``,
+    `${flag} ${location}`,
+    `🕐 ${data.timezone ?? "—"}`,
+    `🌐 Язык: ${data.locale}`,
+    `📌 Источник: ${source}`,
+  ].join("\n");
+
+  await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: TG_CHAT_ID,
+      text,
+      parse_mode: "Markdown",
+    }),
+  }).catch(() => {}); // не блокируем ответ если TG недоступен
+}
+
+function getFlagEmoji(countryCode: string): string {
+  return countryCode
+    .toUpperCase()
+    .split("")
+    .map((c) => String.fromCodePoint(0x1F1E6 - 65 + c.charCodeAt(0)))
+    .join("");
+}
+
+
 export async function POST(req: NextRequest) {
   try {
     // Rate limit по IP
@@ -122,6 +168,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (res.ok) {
+      sendTelegramNotification({ email: rawEmail, country, city, timezone, locale, utm_source, referrer });
       return NextResponse.json({ success: true });
     }
 
