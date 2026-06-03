@@ -1,31 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Button, Input } from "@/shared/ui";
 
 export function FinalCta() {
   const t = useTranslations("finalCta");
+  const locale = useLocale();
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError(t("errorInvalid") ?? "Please enter a valid email.");
+      setError(t("errorInvalid"));
       return;
     }
-    // Store in localStorage waitlist
-    try {
-      const existing: string[] = JSON.parse(localStorage.getItem("waitlist") ?? "[]");
-      if (!existing.includes(email)) {
-        existing.push(email);
-        localStorage.setItem("waitlist", JSON.stringify(existing));
-      }
-    } catch {}
-    setSubmitted(true);
+    setLoading(true);
     setError("");
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, locale }),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        const data = await res.json();
+        setError(data.error ?? t("errorInvalid"));
+      }
+    } catch {
+      setError(t("errorInvalid"));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -59,8 +70,8 @@ export function FinalCta() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <p className="text-base font-semibold text-[var(--text)]">{t("successTitle") ?? "You're on the list!"}</p>
-            <p className="mt-1 text-sm text-[var(--text-2)]">{t("successDesc") ?? "We'll reach out when early access opens."}</p>
+            <p className="text-base font-semibold text-[var(--text)]">{t("successTitle")}</p>
+            <p className="mt-1 text-sm text-[var(--text-2)]">{t("successDesc")}</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
@@ -69,9 +80,10 @@ export function FinalCta() {
               value={email}
               onChange={(e) => { setEmail(e.target.value); setError(""); }}
               className="sm:w-72"
+              disabled={loading}
             />
-            <Button variant="primary" type="submit" className="w-full sm:w-auto">
-              {t("cta")}
+            <Button variant="primary" type="submit" disabled={loading} className="w-full sm:w-auto">
+              {loading ? "..." : t("cta")}
             </Button>
           </form>
         )}
