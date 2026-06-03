@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SUPABASE_URL = process.env.SUPABASE_URL!;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY!;
+const SUPABASE_URL = process.env.SUPABASE_URL ?? "https://nkaeqjmcvunyzmjqaigf.supabase.co";
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY ?? "sb_publishable_zOCZqNFC4DqH_Y8DwTFt0A_jH_EgK_P";
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,13 +22,13 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({ email: email.toLowerCase().trim(), locale: locale ?? "en" }),
     });
 
-    // 409 = дубликат (unique constraint) — не ошибка, просто уже зарегистрирован
+    // 409 = дубликат — не ошибка, уже зарегистрирован
     if (res.ok || res.status === 409) {
       return NextResponse.json({ success: true });
     }
 
     const err = await res.text();
-    console.error("Supabase error:", err);
+    console.error("Supabase error:", res.status, err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
 
   } catch (e) {
