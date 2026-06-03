@@ -29,12 +29,16 @@ export function Hero() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button variant="primary" className="w-full sm:w-auto">
-                {t("cta")}
-              </Button>
-              <Button variant="secondary" className="w-full sm:w-auto">
-                {t("ctaSecondary")} ▶
-              </Button>
+              <a href="#cta" className="w-full sm:w-auto">
+                <Button variant="primary" className="w-full">
+                  {t("cta")}
+                </Button>
+              </a>
+              <a href="#how-it-works" className="w-full sm:w-auto">
+                <Button variant="secondary" className="w-full">
+                  {t("ctaSecondary")} ▶
+                </Button>
+              </a>
             </div>
 
             {/* App Store badges */}
