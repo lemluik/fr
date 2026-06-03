@@ -4,6 +4,37 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/shared/lib/cn";
 
+function IconFingerprint() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 12C2 6.48 6.48 2 12 2s10 4.48 10 10"/>
+      <path d="M5 12a7 7 0 0 1 7-7"/>
+      <path d="M12 10a2 2 0 0 1 2 2c0 3-3 5-3 5"/>
+      <path d="M12 12v.01"/>
+    </svg>
+  );
+}
+
+function IconSend() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 2L11 13"/>
+      <path d="M22 2L15 22 11 13 2 9l20-7z"/>
+    </svg>
+  );
+}
+
+function IconBell() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+    </svg>
+  );
+}
+
+const USER_ICONS = [<IconFingerprint key="fp" />, <IconSend key="send" />, <IconBell key="bell" />];
+
 export function SecurityToggle() {
   const t = useTranslations("security");
   const [mode, setMode] = useState<"user" | "tech">("user");
@@ -45,10 +76,10 @@ export function SecurityToggle() {
             <h3 className="text-xl font-semibold text-[var(--text)]">{t("userTitle")}</h3>
             <p className="mt-2 text-sm text-[var(--text-3)]">{t("userSubtitle")}</p>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              {(["🔐", "👆", "⚡"] as const).map((icon, i) => (
+              {USER_ICONS.map((icon, i) => (
                 <div key={i} className="glass rounded-xl p-5 text-center">
-                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--primary)]/10">
-                    <span className="text-xl">{icon}</span>
+                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--primary)]/10 text-[var(--primary)]">
+                    {icon}
                   </div>
                   <p className="text-sm font-medium text-[var(--text)]">{t(`userFeature${i + 1}Title`)}</p>
                   <p className="mt-1 text-xs text-[var(--text-3)]">{t(`userFeature${i + 1}Desc`)}</p>
@@ -65,21 +96,21 @@ export function SecurityToggle() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div className="rounded-xl border border-[var(--primary)]/25 bg-[var(--primary)]/6 p-5">
                   <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--primary)]/12">
-                    <svg className="h-5 w-5 text-[var(--primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    <svg className="h-5 w-5 text-[var(--primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
                   </div>
                   <p className="font-mono text-xs font-bold text-[var(--primary)]">{t("techKey1")}</p>
                   <p className="mt-1 text-xs text-[var(--text-3)]">{t("techKey1Desc")}</p>
                 </div>
                 <div className="rounded-xl border border-[var(--primary-end)]/25 bg-[var(--primary-end)]/6 p-5">
                   <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--primary-end)]/12">
-                    <svg className="h-5 w-5 text-[var(--primary-end)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    <svg className="h-5 w-5 text-[var(--primary-end)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                   </div>
                   <p className="font-mono text-xs font-bold text-[var(--primary-end)]">{t("techKey2")}</p>
                   <p className="mt-1 text-xs text-[var(--text-3)]">{t("techKey2Desc")}</p>
                 </div>
                 <div className="rounded-xl border border-[var(--accent)]/25 bg-[var(--accent)]/6 p-5">
                   <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--accent)]/12">
-                    <svg className="h-5 w-5 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    <svg className="h-5 w-5 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                   </div>
                   <p className="font-mono text-xs font-bold text-[var(--accent)]">{t("techKey3")}</p>
                   <p className="mt-1 text-xs text-[var(--text-3)]">{t("techKey3Desc")}</p>
