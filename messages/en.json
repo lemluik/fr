@@ -8,16 +8,16 @@
     "howItWorks": "How It Works",
     "security": "Security",
     "faq": "FAQ",
-    "cta": "Join Waitlist",
+    "cta": "Register for Beta",
     "menu": "Menu",
     "close": "Close"
   },
   "hero": {
-    "badge": "Early access — limited spots",
+    "badge": "Beta coming soon — register to be first",
     "titleLine1": "Your Money Works Everywhere",
     "titleLine2": "Zero Fees. Zero Borders.",
     "subtitle": "Virtual Visa/Mastercard funded by stablecoins. Travel bookings at wholesale prices. Global eSIM. All in one app.",
-    "cta": "Join the Waitlist",
+    "cta": "Register for Beta",
     "ctaSecondary": "Watch Demo",
     "placeholder": "Enter your email",
     "privacy": "No spam. Unsubscribe anytime.",
@@ -109,7 +109,7 @@
   "personas": {
     "title": "Built For Your Lifestyle",
     "subtitle": "Whether you code from Bali or run a business from Dubai — Frameless adapts to your unique needs.",
-    "cta": "Start as {role}",
+    "cta": "Register as {role}",
     "tabs": {
       "it": {
         "label": "IT Professional",
@@ -151,7 +151,7 @@
   },
   "faq": {
     "title": "Frequently Asked Questions",
-    "subtitle": "Everything you need to know before joining the waitlist.",
+    "subtitle": "Everything you need to know before registering for beta.",
     "q1": "Is my crypto safe with Frameless?",
     "a1": "Frameless uses a non-custodial MPC wallet — your private key is split between your device's Secure Enclave and our isolated cloud environment. Not even Frameless can access your assets without your biometric confirmation. No seed phrases to lose or store.",
     "q2": "What countries are supported?",
@@ -168,18 +168,18 @@
     "a7": "We connect to wholesale travel APIs (Duffel for flights, Hotelbeds and Expedia for hotels, 12Go for ground transport). You pay with stablecoins or your card balance at Net-Rate prices — up to 25% cheaper than consumer platforms like Booking.com.",
     "q8": "Is Frameless regulated?",
     "a8": "Frameless is building toward full multi-jurisdiction licensing: VARA (UAE) for virtual asset operations and MiCA compliance for EU. Client funds are safeguarded under the EU e-money directive framework.",
-    "q9": "When can I start using Frameless?",
-    "a9": "We're in early access with limited spots. Join the waitlist now — early members get priority access, lifetime fee discounts, and a founding member badge."
+    "q9": "When will beta be available?",
+    "a9": "Beta is coming soon. Register now to be among the first to get access — early registrants get priority onboarding, lifetime fee discounts, and a founding member badge."
   },
   "finalCta": {
-    "title": "Stop Paying Fees You Don't Have To",
-    "subtitle": "Join early access and be among the first to experience truly borderless finance.",
-    "cta": "Join the Waitlist",
+    "title": "Beta Is Coming — Don't Miss Your Spot",
+    "subtitle": "Register now and be among the first to experience truly borderless finance. No fees, no limits, no borders.",
+    "cta": "Register for Beta",
     "placeholder": "Enter your email",
-    "urgency": "Early access — limited spots available",
+    "urgency": "Beta coming soon — register to be first",
     "errorInvalid": "Please enter a valid email address.",
-    "successTitle": "You're on the list!",
-    "successDesc": "We'll notify you when your early access is ready."
+    "successTitle": "You're registered!",
+    "successDesc": "We'll notify you as soon as beta is ready. You'll be first in line."
   },
   "footer": {
     "tagline": "The financial super app for digital nomads. Banking, travel, and connectivity — powered by stablecoins.",
