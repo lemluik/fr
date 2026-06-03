@@ -66,11 +66,11 @@ export function Hero() {
                 <p className="text-xs text-[var(--text-3)]">{t("stat1")}</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-[var(--text)] font-mono">0%</p>
+                <p className="text-2xl font-bold text-[var(--accent)] font-mono">0%</p>
                 <p className="text-xs text-[var(--text-3)]">{t("stat2")}</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-[var(--text)] font-mono">24/7</p>
+                <p className="text-2xl font-bold text-[var(--accent)] font-mono">$0</p>
                 <p className="text-xs text-[var(--text-3)]">{t("stat3")}</p>
               </div>
             </div>
