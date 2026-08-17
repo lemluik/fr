@@ -531,7 +531,7 @@ function SaveScreen() {
       <p className="text-[8px] text-[var(--text-3)]">{t("balanceLabel")}</p>
       <p className="font-mono text-[26px] font-bold leading-tight text-[var(--text)]">$8,200.00</p>
       {/* Спарклайн баланса за месяц */}
-      <div className="h-5 w-full">
+      <div className="h-4 w-full">
         <svg className="h-full w-full" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true">
           <path d="M0 18 L12 16 L24 17 L36 12 L48 14 L60 9 L72 11 L84 6 L100 3" fill="none" stroke="var(--primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M0 18 L12 16 L24 17 L36 12 L48 14 L60 9 L72 11 L84 6 L100 3 L100 24 L0 24 Z" fill="var(--primary)" opacity="0.08" />
@@ -628,21 +628,72 @@ function SaveScreen() {
 
 /* ─── Мокап iPhone: рамка + статус-бар + активный экран ─────────────── */
 
+/* Иконки нижнего таб-бара (1:1 как в hero-мокапе PhoneShowcase) */
+const NAV_ICONS: (string[] | null)[] = [
+  ["M3 10.5 12 3l9 7.5", "M5 9.5V21h14V9.5"],
+  ["M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"],
+  null,
+  ["M3 6a2 2 0 0 1 2-2h14v4M3 6v12a2 2 0 0 0 2 2h16V8H5a2 2 0 0 1-2-2zM16 14h.01"],
+  ["M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"],
+];
+
+/* Активная вкладка по контексту глагола: pay — карта, travel — сервисы,
+   send — кошелёк, save — главный экран */
+const NAV_ACTIVE: Record<Verb, number> = { pay: 2, travel: 1, send: 3, save: 0 };
+
+function VerbTabBar({ verb }: { verb: Verb }) {
+  const active = NAV_ACTIVE[verb];
+  return (
+    <div className="border-t border-[var(--border)] bg-white px-2 pb-1 pt-1.5">
+      <div className="flex items-center justify-between">
+        {NAV_ICONS.map((paths, i) =>
+          paths === null ? (
+            <span
+              key={i}
+              className="-mt-6 flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--primary-end)] text-white shadow-lg shadow-[rgba(74,108,247,0.4)]"
+            >
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+                <rect x="2.5" y="5.5" width="19" height="13" rx="2.5" />
+                <path d="M2.5 9.5h19" />
+              </svg>
+            </span>
+          ) : (
+            <span
+              key={i}
+              className={`flex h-8 w-8 flex-col items-center justify-center gap-0.5 ${
+                i === active ? "text-[var(--primary)]" : "text-[var(--text-3)]/60"
+              }`}
+            >
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                {paths.map((d) => (
+                  <path key={d} d={d} />
+                ))}
+              </svg>
+              <span className={`h-1 w-1 rounded-full ${i === active ? "bg-[var(--primary)]" : "bg-transparent"}`} aria-hidden="true" />
+            </span>
+          )
+        )}
+      </div>
+    </div>
+  );
+}
+
 function PhoneMockup({ verb }: { verb: Verb }) {
   return (
     <div className="phone-frame mx-auto aspect-[9/19] w-[260px] sm:w-[270px]" aria-hidden="true">
-      <div className="flex h-full flex-col bg-white p-4">
+      <div className="flex h-full flex-col bg-white p-4 pb-2">
         {/* Статус-бар */}
         <div className="flex items-center justify-between px-1 text-[10px] text-[var(--text-3)]">
           <span className="font-semibold text-[var(--text)]">9:41</span>
           <span>●●●</span>
         </div>
-        <div className="mt-4 space-y-2.5">
+        <div className="mt-3 flex-1 space-y-2 overflow-hidden">
           {verb === "pay" && <PayScreen />}
           {verb === "travel" && <TravelScreen />}
           {verb === "send" && <SendScreen />}
           {verb === "save" && <SaveScreen />}
         </div>
+        <VerbTabBar verb={verb} />
       </div>
     </div>
   );
