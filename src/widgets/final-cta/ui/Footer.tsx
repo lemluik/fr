@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Logo } from "@/shared/ui";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -9,7 +10,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Бренд */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <span className="text-xl font-bold tracking-tight text-white">frameless</span>
+            <Logo onDark />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/50">{t("tagline")}</p>
             {/* Соцсети — X, Telegram */}
             <div className="mt-6 flex gap-4">

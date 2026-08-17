@@ -38,6 +38,7 @@ yarn-error.log*
 
 # local screenshots
 .qoder-screens/
+.qoder-backup/
 # typescript
 *.tsbuildinfo
 next-env.d.ts

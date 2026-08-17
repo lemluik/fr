@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useParams, usePathname } from "next/navigation";
 import { cn } from "@/shared/lib/cn";
+import { Logo } from "@/shared/ui";
 
 const LOCALES = [
   { code: "ru", label: "RU" },
@@ -34,11 +35,7 @@ export function Navbar() {
     { href: "#faq", label: t("faq") },
   ];
 
-  const wordmark = (
-    <a href="#" className="text-xl font-bold tracking-tight text-[#1A1F36]">
-      frameless
-    </a>
-  );
+  const wordmark = <Logo />;
 
   return (
     <>

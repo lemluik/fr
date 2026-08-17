@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { LogoMark } from "@/shared/ui";
 import { PhoneShowcase } from "./PhoneShowcase";
 
 export function Hero() {
@@ -13,6 +14,11 @@ export function Hero() {
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Слева: текст */}
           <div>
+            <div className="section-label mb-6">
+              <LogoMark tone="gradient" size={14} />
+              {t("slogan")}
+            </div>
+
             <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-[var(--text)] sm:text-5xl lg:text-[64px]">
               {t("title")}
             </h1>
@@ -25,7 +31,6 @@ export function Hero() {
               <a href="#cta" className="btn-primary inline-flex h-12 items-center px-8 text-sm">
                 {t("cta")}
               </a>
-              <p className="mt-3 text-xs text-[var(--text-3)]">{t("slogan")}</p>
             </div>
           </div>
 
