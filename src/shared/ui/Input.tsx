@@ -19,7 +19,7 @@ export function Input({ placeholder, type = "email", className, value, onChange,
       onChange={onChange}
       name={name}
       disabled={disabled}
-      className={cn("input-dark w-full disabled:opacity-50 disabled:cursor-not-allowed", className)}
+      className={cn("input-light w-full disabled:opacity-50 disabled:cursor-not-allowed", className)}
     />
   );
 }

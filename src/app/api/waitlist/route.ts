@@ -41,8 +41,8 @@ function sanitizeInt(val: unknown): number | null {
 }
 
 // ─── Telegram уведомление ─────────────────────────────────────────────────────
-const TG_BOT_TOKEN = "8834507209:AAGV02HQsOd2F3F-rrJfzIIQmQvTNe3Q40Q";
-const TG_CHAT_ID   = "5757340085";
+const TG_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN ?? "";
+const TG_CHAT_ID   = process.env.TELEGRAM_CHAT_ID ?? "";
 
 async function sendTelegramNotification(data: {
   email: string;
@@ -52,16 +52,20 @@ async function sendTelegramNotification(data: {
   locale: string;
   utm_source: string | null;
   referrer: string | null;
+  residence: string | null;
+  priority: string | null;
 }) {
   const flag = data.country ? getFlagEmoji(data.country) : "🌍";
   const location = [data.city, data.country].filter(Boolean).join(", ") || "неизвестно";
-  const source = data.utm_source ?? (data.referrer ? new URL(data.referrer.startsWith("http") ? data.referrer : `https://${data.referrer}`).hostname : "прямой заход");
+  const source = data.utm_source ?? safeReferrerHost(data.referrer);
 
   const text = [
     `🎯 *Новая регистрация в waitlist*`,
     ``,
     `📧 \`${data.email}\``,
     `${flag} ${location}`,
+    `🏠 Живёт: ${data.residence ?? "—"}`,
+    `⭐ Приоритет: ${data.priority ?? "—"}`,
     `🕐 ${data.timezone ?? "—"}`,
     `🌐 Язык: ${data.locale}`,
     `📌 Источник: ${source}`,
@@ -76,6 +80,25 @@ async function sendTelegramNotification(data: {
       parse_mode: "Markdown",
     }),
   }).catch((e) => console.error("TG error:", e?.message));
+}
+
+function safeReferrerHost(referrer: string | null): string {
+  if (!referrer) return "прямой заход";
+  try {
+    const url = new URL(referrer.startsWith("http") ? referrer : `https://${referrer}`);
+    return url.hostname;
+  } catch {
+    return "некорректный referrer";
+  }
+}
+
+function safeDecodeCity(raw: string | null): string | null {
+  if (!raw) return null;
+  try {
+    return sanitize(decodeURIComponent(raw), 100);
+  } catch {
+    return sanitize(raw, 100);
+  }
 }
 
 function getFlagEmoji(countryCode: string): string {
@@ -127,24 +150,47 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Санитизация остальных полей ────────────────────────────────────────────
-    const locale       = sanitize(body.locale, 10) ?? "en";
+    const locale       = sanitize(body.locale, 10) ?? "ru";
     const timezone     = sanitize(body.timezone, 60);
     const referrer     = sanitize(body.referrer, 500);
     const utm_source   = sanitize(body.utm_source, 100);
     const utm_medium   = sanitize(body.utm_medium, 100);
     const utm_campaign = sanitize(body.utm_campaign, 100);
     const screen_w     = sanitizeInt(body.screen_w);
+    const residence    = sanitize(body.residence, 20); // страна проживания из формы
+    const priority     = sanitize(body.priority, 20);  // «Что вам важнее всего?»
 
     // ── Данные из Vercel headers ───────────────────────────────────────────────
     const country    = sanitize(req.headers.get("x-vercel-ip-country"), 10);
-    const city       = sanitize(decodeURIComponent(req.headers.get("x-vercel-ip-city") ?? ""), 100);
+    const city       = safeDecodeCity(req.headers.get("x-vercel-ip-city"));
     const user_agent = sanitize(req.headers.get("user-agent"), 300);
 
     // ── Запись в Supabase ──────────────────────────────────────────────────────
-    const supabaseUrl = "https://nkaeqjmcvunyzmjqaigf.supabase.co";
-    const supabaseKey = "sb_publishable_zOCZqNFC4DqH_Y8DwTFt0A_jH_EgK_P";
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    const res = await fetch(`${supabaseUrl}/rest/v1/waitlist`, {
+    if (!supabaseUrl || !supabaseKey) {
+      console.error("Missing Supabase env vars: SUPABASE_URL and/or SUPABASE_SERVICE_ROLE_KEY");
+      return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+    }
+
+    const row = {
+      email: rawEmail,
+      locale,
+      country,
+      city,
+      timezone,
+      referrer,
+      utm_source,
+      utm_medium,
+      utm_campaign,
+      user_agent,
+      screen_w,
+      residence,
+      priority,
+    };
+
+    const postOpts = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -152,24 +198,50 @@ export async function POST(req: NextRequest) {
         "Authorization": `Bearer ${supabaseKey}`,
         "Prefer": "return=minimal",
       },
-      body: JSON.stringify({
-        email: rawEmail,
-        locale,
-        country,
-        city,
-        timezone,
-        referrer,
-        utm_source,
-        utm_medium,
-        utm_campaign,
-        user_agent,
-        screen_w,
-      }),
+    };
+
+    // Новые колонки residence/priority могут отсутствовать в схеме —
+    // в этом случае повторяем запись без них.
+    let res = await fetch(`${supabaseUrl}/rest/v1/waitlist`, {
+      ...postOpts,
+      body: JSON.stringify(row),
     });
+    if (!res.ok && res.status === 400) {
+      const legacyRow = Object.fromEntries(
+        Object.entries(row).filter(([k]) => k !== "residence" && k !== "priority")
+      );
+      res = await fetch(`${supabaseUrl}/rest/v1/waitlist`, {
+        ...postOpts,
+        body: JSON.stringify(legacyRow),
+      });
+    }
 
     if (res.ok) {
-      await sendTelegramNotification({ email: rawEmail, country, city, timezone, locale, utm_source, referrer });
-      return NextResponse.json({ success: true });
+      // Позиция в списке = общее число подписчиков (для success-state)
+      let position: number | null = null;
+      try {
+        const countRes = await fetch(
+          `${supabaseUrl}/rest/v1/waitlist?select=email&limit=1`,
+          {
+            headers: {
+              "apikey": supabaseKey,
+              "Authorization": `Bearer ${supabaseKey}`,
+              "Prefer": "count=exact",
+              "Range": "0-0",
+            },
+          }
+        );
+        const range = countRes.headers.get("content-range");
+        const total = range?.split("/")[1];
+        if (total && /^\d+$/.test(total)) position = Number(total);
+      } catch {
+        // позиция не критична
+      }
+
+      if (TG_BOT_TOKEN && TG_CHAT_ID) {
+        await sendTelegramNotification({ email: rawEmail, country, city, timezone, locale, utm_source, referrer, residence, priority });
+      }
+      return NextResponse.json({ success: true, position });
     }
 
     if (res.status === 409) {

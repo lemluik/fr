@@ -1,65 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useRef } from "react";
 import { useTranslations } from "next-intl";
-import { Section } from "@/shared/ui";
-import { cn } from "@/shared/lib/cn";
-
-const FAQ_KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
-
-function AccordionItem({ q, a, isOpen, onToggle }: { q: string; a: string; isOpen: boolean; onToggle: () => void }) {
-  return (
-    <div className="border-b border-[var(--border)] last:border-b-0">
-      <button
-        onClick={onToggle}
-        className="flex w-full items-center justify-between py-5 text-left"
-      >
-        <span className="pr-8 text-sm font-medium text-[var(--text)] sm:text-base">{q}</span>
-        <span className={cn(
-          "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[var(--border-2)] text-[var(--text-3)] transition-transform",
-          isOpen && "rotate-180"
-        )}>
-          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </span>
-      </button>
-      <div className={cn(
-        "overflow-hidden transition-all duration-300",
-        isOpen ? "max-h-96 pb-5" : "max-h-0"
-      )}>
-        <p className="text-sm leading-relaxed text-[var(--text-2)]">{a}</p>
-      </div>
-    </div>
-  );
-}
 
 export function Faq() {
   const t = useTranslations("faq");
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  const items = Array.from({ length: 8 }, (_, i) => ({
+    q: t(`q${i + 1}`),
+    a: t(`a${i + 1}`),
+  }));
+
+  // Одна открытая секция за раз (нативный disclosure + синхронизация)
+  const handleToggle = (e: React.SyntheticEvent<HTMLDetailsElement>) => {
+    const target = e.currentTarget;
+    if (!target.open || !rootRef.current) return;
+    rootRef.current
+      .querySelectorAll("details[open]")
+      .forEach((d) => {
+        if (d !== target) (d as HTMLDetailsElement).open = false;
+      });
+  };
 
   return (
-    <Section id="faq" className="py-24">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">
+    <section id="faq" className="py-16 sm:py-24">
+      <div className="mx-auto max-w-[720px] px-6">
+        <h2 className="text-[28px] font-bold leading-tight text-[var(--text)] sm:text-[44px] sm:leading-[1.2]">
           {t("title")}
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-[var(--text-2)]">
-          {t("subtitle")}
-        </p>
-      </div>
+        <p className="mt-4 text-base leading-relaxed text-[var(--text-3)]">{t("subtitle")}</p>
 
-      <div className="mx-auto mt-12 max-w-3xl feature-card rounded-2xl p-6 sm:p-8">
-        {FAQ_KEYS.map((key, i) => (
-          <AccordionItem
-            key={key}
-            q={t(`q${key}`)}
-            a={t(`a${key}`)}
-            isOpen={openIndex === i}
-            onToggle={() => setOpenIndex(openIndex === i ? null : i)}
-          />
-        ))}
+        <div ref={rootRef} className="mt-10">
+          {items.map((item, i) => (
+            <details key={i} className="faq-item" onToggle={handleToggle}>
+              <summary className="py-5 text-base font-medium text-[var(--text)]">
+                {item.q}
+                <svg
+                  className="faq-chevron h-4 w-4 text-[var(--text-3)]"
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div className="faq-answer pb-5 text-sm leading-relaxed text-[var(--text-2)]">
+                {item.a}
+              </div>
+            </details>
+          ))}
+        </div>
+
+        <div className="mt-10 text-center">
+          <a href="#cta" className="btn-primary inline-flex h-12 items-center px-8 text-sm">
+            <FaqCta />
+          </a>
+        </div>
       </div>
-    </Section>
+    </section>
   );
+}
+
+function FaqCta() {
+  const t = useTranslations("nav");
+  return <>{t("cta")}</>;
 }

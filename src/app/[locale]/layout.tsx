@@ -13,14 +13,14 @@ const inter = Inter({
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://frameless.money"),
-  title: "Frameless — Financial Freedom Without Borders",
+  title: "Frameless — деньги для цифровых кочевников: карта, eSIM, путешествия",
   description:
-    "Crypto-native super app for digital nomads. Virtual cards, bookings, and eSIM powered by stablecoins.",
+    "Visa-карта из ваших долларов, eSIM, отели и переводы без скрытых комиссий. Финансы без рамок — вступите в лист ожидания.",
 };
 
 type Props = {
@@ -39,7 +39,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="min-h-screen bg-[#080c14] font-sans text-[#f1f5f9] antialiased">
+      <body className="min-h-screen bg-[#F7F8FC] font-sans text-[#1A1F36] antialiased">
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

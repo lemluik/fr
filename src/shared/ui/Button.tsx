@@ -23,7 +23,7 @@ export function Button({
   const variants = {
     primary:   "btn-primary h-12 px-8 text-sm",
     secondary: "btn-secondary h-12 px-8 text-sm",
-    ghost:     "h-10 rounded-lg px-4 text-sm text-[var(--text-3)] hover:text-[var(--text-2)] hover:bg-white/5",
+    ghost:     "h-10 rounded-lg px-4 text-sm text-[var(--text-3)] hover:text-[var(--text-2)] hover:bg-black/5",
   };
 
   return (
