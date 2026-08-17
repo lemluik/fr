@@ -62,7 +62,6 @@ export function ProofStrip() {
 
   const stats: StatProps[] = [
     { value: t("s1Value"), suffix: t("s1Suffix"), label: t("s1Label") },
-    { value: t("s2Value"), suffix: t("s2Suffix"), label: t("s2Label") },
     { value: t("s3Value"), suffix: t("s3Suffix"), label: t("s3Label") },
     { value: t("s4Value"), suffix: t("s4Suffix"), label: t("s4Label") },
   ];
@@ -70,7 +69,7 @@ export function ProofStrip() {
   return (
     <section className="bg-white py-16 sm:py-20">
       <div className="mx-auto max-w-[1200px] px-6">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-3">
           {stats.map((s, i) => (
             <Stat key={i} {...s} />
           ))}
