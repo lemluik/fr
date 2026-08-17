@@ -7,6 +7,7 @@ import { useScrollReveal } from "@/shared/hooks/useScrollReveal";
 /* Лёгкий 3D-tilt за курсором: только desktop, амплитуда ≤ 6°,
    отключается при prefers-reduced-motion */
 function TiltCard() {
+  const t = useTranslations("card");
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMove = (e: React.MouseEvent) => {
@@ -34,7 +35,7 @@ function TiltCard() {
           <span className="text-xs font-bold tracking-wider opacity-80">VISA</span>
         </div>
         <div className="mt-10">
-          <p className="text-xs text-white/50">Баланс</p>
+          <p className="text-xs text-white/50">{t("mockBalance")}</p>
           <p className="mt-1 font-mono text-3xl font-bold tracking-tight">$12,450</p>
         </div>
         <div className="mt-10 flex items-end justify-between">

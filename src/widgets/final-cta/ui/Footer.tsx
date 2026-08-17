@@ -31,7 +31,10 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white">{t("product")}</h4>
             <ul className="mt-4 space-y-3 text-sm text-white/50">
-              <li><a href="#product" className="transition-colors hover:text-white">{t("productVerbs")}</a></li>
+              <li><a href="#pay" className="transition-colors hover:text-white">{t("verbPay")}</a></li>
+              <li><a href="#travel" className="transition-colors hover:text-white">{t("verbTravel")}</a></li>
+              <li><a href="#send" className="transition-colors hover:text-white">{t("verbSend")}</a></li>
+              <li><a href="#save" className="transition-colors hover:text-white">{t("verbSave")}</a></li>
               <li><a href="#card" className="transition-colors hover:text-white">{t("productCard")}</a></li>
               <li><a href="#security" className="transition-colors hover:text-white">{t("productSecurity")}</a></li>
               <li><a href="#pricing" className="transition-colors hover:text-white">{t("productPricing")}</a></li>
