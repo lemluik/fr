@@ -746,6 +746,19 @@ export function Verbs() {
 
   return (
     <section id="product" className="relative overflow-hidden py-16 sm:py-24">
+      {/* Текстура фона: точечная сетка с затуханием + мягкие пятна бренда */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="bg-dots-light mask-fade-y absolute inset-0" />
+        <div
+          className="absolute -left-40 top-[8%] h-[480px] w-[480px] rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(74,108,247,0.07) 0%, transparent 65%)" }}
+        />
+        <div
+          className="glow-pulse absolute -right-40 bottom-[6%] h-[520px] w-[520px] rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(108,92,231,0.06) 0%, transparent 65%)" }}
+        />
+      </div>
+
       {/* Мягкое свечение позади мокапов, едет со скроллом */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div ref={glow} className="absolute top-[12%] right-[-8%] h-[520px] w-[520px] will-change-transform">
