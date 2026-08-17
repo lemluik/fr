@@ -42,6 +42,9 @@ const PATHS = {
   chevron: "m9 6 6 6-6 6",
   back: "M15 18l-6-6 6-6",
   check: "M20 6 9 17l-5-5",
+  eye: "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",
+  trendUp: "M3 17l6-6 4 4 8-8M15 7h6v6",
+  contactless: "M8.5 8.5a5 5 0 0 1 0 7M11.5 6a9 9 0 0 1 0 12M5.5 11a1.5 1.5 0 0 1 0 2",
 };
 
 function LockIcon({ size = 12 }: { size?: number }) {
@@ -54,7 +57,7 @@ function TxIcon({ label, tone }: { label: string; tone: string }) {
   return (
     <span
       className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12px] font-bold"
-      style={{ background: `${tone}1A`, color: tone }}
+      style={{ background: `${tone}14`, color: tone, border: `1px solid ${tone}2E` }}
       aria-hidden="true"
     >
       {label}
@@ -85,11 +88,15 @@ function TabBar({ active }: { active: number }) {
           ) : (
             <span
               key={i}
-              className={`flex h-8 w-8 items-center justify-center ${
+              className={`flex h-8 w-8 flex-col items-center justify-center gap-0.5 ${
                 i === active ? "text-[var(--primary)]" : "text-[var(--text-3)]/60"
               }`}
             >
               <Icon d={d} size={17} />
+              <span
+                className={`h-1 w-1 rounded-full ${i === active ? "bg-[var(--primary)]" : "bg-transparent"}`}
+                aria-hidden="true"
+              />
             </span>
           )
         )}
@@ -103,22 +110,41 @@ function TabBar({ active }: { active: number }) {
 function HomeScreen({ t }: { t: (k: string) => string }) {
   return (
     <div className="flex h-full flex-col">
+      {/* Приветствие: аватар + локация, колокольчик с точкой */}
       <div className="flex items-center justify-between">
-        <p className="text-[13px] font-semibold text-[var(--text)]">{t("homeGreeting")}</p>
-        <span className="flex items-center gap-2.5 text-[var(--text-3)]">
-          <Icon d={PATHS.bell} size={15} />
-          <Icon d={PATHS.question} size={15} />
+        <div className="flex items-center gap-2">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)] text-[11px] font-bold text-white" aria-hidden="true">
+            А
+          </span>
+          <div>
+            <p className="text-[12.5px] font-semibold leading-tight text-[var(--text)]">{t("homeGreeting")}</p>
+            <p className="mt-0.5 text-[9.5px] text-[var(--text-3)]">{t("homeGreetingSub")}</p>
+          </div>
+        </div>
+        <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border)] bg-white text-[var(--text-2)] shadow-sm">
+          <Icon d={PATHS.bell} size={14} />
+          <span className="absolute right-[7px] top-[7px] h-1.5 w-1.5 rounded-full bg-[var(--red)]" aria-hidden="true" />
         </span>
       </div>
 
-      {/* Balance Card — градиент бренда (1 на экран) */}
-      <div className="mt-3 rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--primary-end)] p-4 text-white shadow-lg shadow-[rgba(74,108,247,0.35)]">
-        <p className="text-[10px] font-medium uppercase tracking-wider text-white/70">{t("homeBalanceLabel")}</p>
-        <p className="mt-1 font-mono text-[26px] font-bold leading-none tracking-tight">{t("homeBalance")}</p>
-        <p className="mt-1.5 text-[11px] font-medium text-white/80">{t("homeDelta")}</p>
-        <div className="mt-3 flex gap-1.5">
-          <span className="rounded-full bg-white/15 px-2 py-0.5 font-mono text-[10px] text-white/90">{t("homePill1")}</span>
-          <span className="rounded-full bg-white/15 px-2 py-0.5 font-mono text-[10px] text-white/90">{t("homePill2")}</span>
+      {/* Balance Card — градиент бренда (1 на экран), декор для глубины */}
+      <div className="relative mt-3 overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--primary)] to-[var(--primary-end)] p-4 text-white shadow-lg shadow-[rgba(74,108,247,0.35)]">
+        <div aria-hidden="true" className="absolute -right-10 -top-12 h-36 w-36 rounded-full bg-white/10" />
+        <div aria-hidden="true" className="absolute -right-2 -top-16 h-36 w-36 rounded-full bg-white/[0.07]" />
+        <div className="relative">
+          <div className="flex items-center justify-between">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-white/70">{t("homeBalanceLabel")}</p>
+            <Icon d={PATHS.eye} size={13} className="text-white/60" />
+          </div>
+          <p className="mt-1 font-mono text-[27px] font-bold leading-none tracking-tight">{t("homeBalance")}</p>
+          <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-semibold">
+            <Icon d={PATHS.trendUp} size={10} />
+            {t("homeDelta")}
+          </span>
+          <div className="mt-3 flex gap-1.5">
+            <span className="rounded-full border border-white/15 bg-white/10 px-2 py-0.5 font-mono text-[10px] text-white/90">{t("homePill1")}</span>
+            <span className="rounded-full border border-white/15 bg-white/10 px-2 py-0.5 font-mono text-[10px] text-white/90">{t("homePill2")}</span>
+          </div>
         </div>
       </div>
 
@@ -131,7 +157,7 @@ function HomeScreen({ t }: { t: (k: string) => string }) {
           { icon: PATHS.wallet, label: t("qa4") },
         ].map((a) => (
           <span key={a.label} className="flex flex-col items-center gap-1">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--bg)] text-[var(--text)]">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-white text-[var(--primary)] shadow-sm">
               <Icon d={a.icon} size={15} />
             </span>
             <span className="text-[9.5px] font-medium text-[var(--text-3)]">{a.label}</span>
@@ -147,14 +173,20 @@ function HomeScreen({ t }: { t: (k: string) => string }) {
       </div>
 
       {/* Последние операции */}
-      <p className="mt-3 text-[12px] font-semibold text-[var(--text)]">{t("homeTxTitle")}</p>
+      <div className="mt-3 flex items-center justify-between">
+        <p className="text-[12px] font-semibold text-[var(--text)]">{t("homeTxTitle")}</p>
+        <span className="flex items-center gap-0.5 text-[10px] font-semibold text-[var(--primary)]">
+          {t("homeSeeAll")}
+          <Icon d={PATHS.chevron} size={10} />
+        </span>
+      </div>
       <div className="mt-1.5 space-y-1">
         {[
           { label: "G", tone: "#00B14F", title: "Grab Food", sub: t("homeTx1Sub"), amount: "−$12.50", amountClass: "text-[var(--text)]" },
           { label: "e", tone: "#4A6CF7", title: t("homeTx2Title"), sub: t("homeTx2Sub"), amount: "−$7.00", amountClass: "text-[var(--text)]" },
           { label: "Д", tone: "#6C5CE7", title: t("homeTx3Title"), sub: t("homeTx3Sub"), amount: "+$200.00", amountClass: "text-[var(--green)]" },
         ].map((tx) => (
-          <div key={tx.title} className="flex items-center gap-2.5 rounded-xl bg-[var(--bg)] px-2.5 py-2">
+          <div key={tx.title} className="flex items-center gap-2.5 rounded-xl border border-[var(--border)] bg-white px-2.5 py-2 shadow-sm">
             <TxIcon label={tx.label} tone={tx.tone} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-[12px] font-semibold text-[var(--text)]">{tx.title}</p>
@@ -182,15 +214,22 @@ function CardScreen({ t }: { t: (k: string) => string }) {
         <p className="text-[13px] font-semibold text-[var(--text)]">{t("cardTitle")}</p>
       </div>
 
-      {/* Визуал карты — тёмный, по ТЗ */}
-      <div className="fcard mt-4 rounded-2xl p-4">
-        <div className="flex items-start justify-between">
+      {/* Визуал карты — тёмный, с бликом, чипом и contactless */}
+      <div className="fcard relative mt-4 overflow-hidden rounded-2xl p-4">
+        <div aria-hidden="true" className="absolute -right-12 -top-16 h-44 w-44 rounded-full bg-white/[0.06]" />
+        <div className="relative flex items-start justify-between">
           <span className="text-[12px] font-bold tracking-widest text-white">FRAMELESS</span>
           <VisaMark />
         </div>
-        <span className="mt-4 block h-6 w-8 rounded-[5px] bg-gradient-to-br from-[#e8d9a8] to-[#c9a961]" aria-hidden="true" />
-        <p className="mt-3 font-mono text-[15px] tracking-[0.14em] text-white/90">{t("cardNumber")}</p>
-        <div className="mt-3 flex items-end justify-between">
+        <div className="relative mt-4 flex items-center gap-3">
+          <span className="relative block h-6 w-8 overflow-hidden rounded-[5px] bg-gradient-to-br from-[#e8d9a8] to-[#c9a961]" aria-hidden="true">
+            <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[#8a6d3b]/60" />
+            <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-[#8a6d3b]/60" />
+          </span>
+          <Icon d={PATHS.contactless} size={16} className="text-white/70" />
+        </div>
+        <p className="relative mt-3 font-mono text-[15px] tracking-[0.14em] text-white/90">{t("cardNumber")}</p>
+        <div className="relative mt-3 flex items-end justify-between">
           <div>
             <p className="text-[8px] uppercase tracking-wider text-white/40">{t("cardHolderLabel")}</p>
             <p className="text-[11px] font-medium tracking-wide text-white/85">ARTEM PETROV</p>
@@ -202,18 +241,30 @@ function CardScreen({ t }: { t: (k: string) => string }) {
         </div>
       </div>
 
-      {/* Праздничный статус — пик лояльности из CJM */}
-      <div className="mx-auto mt-4 flex items-center gap-1.5 rounded-full bg-[var(--green)]/10 px-3 py-1.5 text-[11px] font-semibold text-[var(--green)]">
-        <Icon d={PATHS.check} size={12} />
-        {t("cardDone")}
+      {/* Баланс карты и расходы — пик лояльности из CJM */}
+      <div className="mt-3 rounded-2xl border border-[var(--border)] bg-white p-3 shadow-sm">
+        <div className="flex items-center justify-between">
+          <p className="text-[9.5px] font-medium uppercase tracking-wider text-[var(--text-3)]">{t("cardBalanceLabel")}</p>
+          <span className="flex items-center gap-1 rounded-full bg-[var(--green)]/10 px-2 py-0.5 text-[9.5px] font-bold text-[var(--green)]">
+            <Icon d={PATHS.check} size={10} />
+            {t("cardDone")}
+          </span>
+        </div>
+        <p className="mt-1 font-mono text-[19px] font-bold tracking-tight text-[var(--text)]">{t("homeBalance")}</p>
+        <div className="mt-2.5 flex items-center justify-between text-[9.5px]">
+          <span className="text-[var(--text-3)]">{t("cardSpentTitle")}</span>
+          <span className="font-mono font-semibold text-[var(--text-2)]">{t("cardSpentValue")}</span>
+        </div>
+        <div className="mt-1 h-1 overflow-hidden rounded-full bg-[var(--bg)]">
+          <div className="h-full w-[17%] rounded-full bg-[var(--primary)]" aria-hidden="true" />
+        </div>
       </div>
 
       <div className="mt-auto space-y-2">
-        <span className="flex h-11 items-center justify-center gap-2 rounded-xl bg-[var(--primary)] text-[13px] font-semibold text-white shadow-md shadow-[rgba(74,108,247,0.35)]">
-          <Icon d={PATHS.wallet} size={15} />
+        <span className="flex h-11 items-center justify-center rounded-xl bg-[#1A1F36] text-[13px] font-semibold text-white shadow-md shadow-[rgba(26,31,54,0.3)]">
           {t("cardCta")}
         </span>
-        <span className="flex h-10 items-center justify-center rounded-xl border border-[var(--border-2)] text-[12px] font-medium text-[var(--text-2)]">
+        <span className="flex h-10 items-center justify-center rounded-xl border border-[var(--border-2)] bg-white text-[12px] font-medium text-[var(--text-2)]">
           {t("cardSecondary")}
         </span>
         <p className="pb-1 text-center text-[10px] text-[var(--text-3)]">{t("cardNote")}</p>
@@ -233,56 +284,58 @@ function PayScreen({ t }: { t: (k: string) => string }) {
 
   return (
     <div className="flex h-full flex-col bg-[var(--bg)]">
-      {/* Затемнённый фон приложения под sheet */}
-      <div className="relative flex-1 overflow-hidden rounded-b-2xl bg-[#0D1117]/90 px-4 pt-3">
-        <p className="text-[11px] font-medium text-white/60">{t("payTitle")}</p>
-        <div className="mt-2 space-y-1.5" aria-hidden="true">
-          <div className="h-2 w-2/3 rounded-full bg-white/15" />
-          <div className="h-2 w-1/2 rounded-full bg-white/10" />
-          <div className="h-2 w-3/4 rounded-full bg-white/10" />
+      {/* Затемнённый экран карты под sheet */}
+      <div className="relative flex-1 overflow-hidden rounded-b-2xl bg-[#0D1117]/[0.92] px-4 pt-3">
+        <p className="text-[11px] font-medium text-white/70">{t("payTitle")}</p>
+        <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.06] p-3">
+          <div className="flex items-center justify-between">
+            <span className="text-[9px] font-bold tracking-widest text-white/50">FRAMELESS</span>
+            <span className="text-[9px] font-extrabold italic text-white/50">VISA</span>
+          </div>
+          <p className="mt-3 font-mono text-[11px] tracking-[0.14em] text-white/45">{t("cardNumber")}</p>
         </div>
-        <div className="mt-3 flex items-center gap-1.5 text-[10px] font-medium text-white/50">
-          <LockIcon size={11} />
-          Face ID
+        <div className="mt-3 space-y-1.5" aria-hidden="true">
+          <div className="h-2 w-3/4 rounded-full bg-white/10" />
+          <div className="h-2 w-1/2 rounded-full bg-white/[0.07]" />
         </div>
       </div>
 
       {/* Bottom sheet — основной паттерн подтверждений */}
-      <div className="-mt-3 rounded-t-3xl bg-white px-4 pb-3 pt-2 shadow-[0_-8px_24px_rgba(26,31,54,0.12)]">
+      <div className="-mt-3 rounded-t-3xl bg-white px-4 pb-3 pt-2 shadow-[0_-8px_24px_rgba(26,31,54,0.14)]">
         <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[var(--border-2)]" aria-hidden="true" />
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--bg)] text-[16px]" aria-hidden="true">☕</span>
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg)] text-[16px]" aria-hidden="true">☕</span>
           <div className="min-w-0 flex-1">
             <p className="truncate text-[13px] font-semibold text-[var(--text)]">{t("payMerchant")}</p>
             <p className="text-[10px] text-[var(--text-3)]">{t("payTitle")}</p>
           </div>
           <div className="text-right">
-            <p className="font-mono text-[16px] font-bold leading-none text-[var(--text)]">{t("payAmount")}</p>
+            <p className="font-mono text-[17px] font-bold leading-none text-[var(--text)]">{t("payAmount")}</p>
             <p className="mt-1 font-mono text-[10px] text-[var(--text-3)]">{t("payAmountUsd")}</p>
           </div>
         </div>
 
-        {/* Три строки Mono — комиссия видна ДО подтверждения */}
-        <div className="mt-3 space-y-1.5 rounded-xl bg-[var(--bg)] p-3">
-          {rows.map((r) => (
-            <div key={r.label} className="flex items-center justify-between">
-              <span className="text-[11px] text-[var(--text-3)]">{r.label}</span>
+        {/* Три строки Mono с разделителями — комиссия видна ДО подтверждения */}
+        <div className="mt-3 overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg)]">
+          {rows.map((r, i) => (
+            <div key={r.label} className={`flex items-center justify-between px-3 py-2 ${i > 0 ? "border-t border-[var(--border)]" : ""}`}>
+              <span className={`text-[11px] ${r.strong ? "font-semibold text-[var(--text)]" : "text-[var(--text-3)]"}`}>{r.label}</span>
               <span className={`font-mono ${r.strong ? "text-[13px] font-bold text-[var(--text)]" : "text-[11px] text-[var(--text-2)]"}`}>
                 {r.value}
               </span>
             </div>
           ))}
-        </div>
-
-        <div className="mt-2.5 flex w-fit items-center gap-1.5 rounded-full bg-[var(--green)]/10 px-2.5 py-1 text-[10.5px] font-semibold text-[var(--green)]">
-          <LockIcon size={11} />
-          {t("payLock")}
+          <div className="flex items-center gap-1.5 border-t border-[var(--border)] bg-white px-3 py-2 text-[10.5px] font-semibold text-[var(--green)]">
+            <LockIcon size={11} />
+            {t("payLock")}
+          </div>
         </div>
 
         <span className="mt-3 flex h-11 items-center justify-center gap-2 rounded-xl bg-[var(--primary)] text-[13px] font-semibold text-white shadow-md shadow-[rgba(74,108,247,0.35)]">
           <Icon d={PATHS.faceId} size={15} />
           {t("payCta")}
         </span>
+        <p className="mt-1.5 text-center text-[9.5px] text-[var(--text-3)]">{t("payCaption")}</p>
       </div>
     </div>
   );
@@ -304,18 +357,27 @@ function EsimScreen({ t }: { t: (k: string) => string }) {
         <p className="text-[13px] font-semibold text-[var(--text)]">{t("esimTitle")}</p>
       </div>
 
-      <div className="mt-3 flex items-center justify-between">
-        <p className="text-[15px] font-bold text-[var(--text)]">{t("esimCountry")}</p>
-        <span className="rounded-md border border-[var(--border)] bg-[var(--bg)] px-1.5 py-0.5 text-[10px] font-bold text-[var(--text-3)]">🇹🇭 TH</span>
+      {/* Селектор страны */}
+      <div className="mt-3 flex items-center justify-between rounded-xl border border-[var(--border)] bg-white px-3 py-2.5 shadow-sm">
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--bg)] text-[13px]" aria-hidden="true">🇹🇭</span>
+          <div>
+            <p className="text-[12px] font-semibold leading-tight text-[var(--text)]">{t("esimCountry")}</p>
+            <p className="mt-0.5 text-[9.5px] text-[var(--text-3)]">{t("esimSubtitle")}</p>
+          </div>
+        </div>
+        <Icon d={PATHS.chevron} size={13} className="text-[var(--text-3)]" />
       </div>
 
       {/* Тарифы — опорные пакеты $3.50/$7/$12 из CJM */}
-      <div className="mt-3 space-y-2">
+      <div className="mt-2.5 space-y-2">
         {plans.map((p) => (
           <div
             key={p.size}
             className={`rounded-2xl border p-3 ${
-              p.popular ? "border-[var(--primary)]/45 bg-[var(--primary)]/5" : "border-[var(--border)] bg-white"
+              p.popular
+                ? "border-[var(--primary)]/50 bg-[var(--primary)]/[0.05] ring-1 ring-[var(--primary)]/25"
+                : "border-[var(--border)] bg-white shadow-sm"
             }`}
           >
             <div className="flex items-center justify-between">
@@ -323,7 +385,7 @@ function EsimScreen({ t }: { t: (k: string) => string }) {
                 <div className="flex items-center gap-2">
                   <p className="text-[12.5px] font-semibold text-[var(--text)]">{p.size}</p>
                   {p.popular && (
-                    <span className="rounded-full bg-[var(--primary)]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[var(--primary)]">
+                    <span className="rounded-full bg-[var(--primary)] px-2 py-0.5 text-[8.5px] font-bold uppercase tracking-wide text-white">
                       {t("esimPopular")}
                     </span>
                   )}
@@ -331,10 +393,13 @@ function EsimScreen({ t }: { t: (k: string) => string }) {
                 <p className="mt-0.5 font-mono text-[15px] font-bold text-[var(--text)]">{p.price}</p>
               </div>
               <span
-                className={`rounded-full px-3.5 py-1.5 text-[11px] font-semibold ${
-                  p.popular ? "bg-[var(--primary)] text-white" : "bg-[var(--bg)] text-[var(--text-2)]"
+                className={`flex items-center gap-1 rounded-full px-3.5 py-1.5 text-[11px] font-semibold ${
+                  p.popular
+                    ? "bg-[var(--primary)] text-white shadow-md shadow-[rgba(74,108,247,0.35)]"
+                    : "border border-[var(--border-2)] bg-white text-[var(--text-2)]"
                 }`}
               >
+                {p.popular && <Icon d={PATHS.check} size={11} />}
                 {t("esimBuy")}
               </span>
             </div>
@@ -342,20 +407,21 @@ function EsimScreen({ t }: { t: (k: string) => string }) {
         ))}
       </div>
 
-      {/* Статусы установки — Aha-момент CJM */}
-      <div className="mt-auto rounded-xl bg-[var(--bg)] px-3 py-2.5">
-        <div className="flex items-center justify-between">
-          <span className="flex items-center gap-1 text-[10px] font-semibold text-[var(--green)]">
-            <Icon d={PATHS.check} size={11} />
-            {t("esimStatus1")}
+      {/* Степпер установки — Aha-момент CJM */}
+      <div className="mt-auto rounded-xl border border-[var(--border)] bg-white px-3 pb-2 pt-2.5 shadow-sm">
+        <div className="flex items-center">
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--green)] text-white">
+            <Icon d={PATHS.check} size={10} />
           </span>
-          <span className="h-px w-3 bg-[var(--border-2)]" aria-hidden="true" />
-          <span className="flex items-center gap-1 text-[10px] font-semibold text-[var(--primary)]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] pulse-dot" aria-hidden="true" />
-            {t("esimStatus2")}
-          </span>
-          <span className="h-px w-3 bg-[var(--border-2)]" aria-hidden="true" />
-          <span className="text-[10px] font-medium text-[var(--text-3)]">{t("esimStatus3")}</span>
+          <span className="h-px flex-1 bg-[var(--green)]/40" aria-hidden="true" />
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-[9px] font-bold text-white">2</span>
+          <span className="h-px flex-1 bg-[var(--border-2)]" aria-hidden="true" />
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[var(--border-2)] bg-white text-[9px] font-bold text-[var(--text-3)]">3</span>
+        </div>
+        <div className="mt-1 flex justify-between text-[9px] font-medium">
+          <span className="text-[var(--green)]">{t("esimStatus1")}</span>
+          <span className="text-[var(--primary)]">{t("esimStatus2")}</span>
+          <span className="text-[var(--text-3)]">{t("esimStatus3")}</span>
         </div>
         <p className="mt-1.5 text-center text-[10px] text-[var(--text-3)]">{t("esimNote")}</p>
       </div>

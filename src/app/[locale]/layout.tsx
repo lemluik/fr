@@ -18,7 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://frameless.money"),
-  title: "Frameless — деньги для цифровых кочевников: карта, eSIM, путешествия",
+  title: "Frameless — деньги для цифровых номадов: карта, eSIM, путешествия",
   description:
     "Visa-карта из ваших долларов, eSIM, отели и переводы без скрытых комиссий. Финансы без рамок — вступите в лист ожидания.",
 };
