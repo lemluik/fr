@@ -1,16 +1,22 @@
 import { useTranslations } from "next-intl";
-import { LogoMark } from "@/shared/ui";
+import { LogoMark, MouseParallax } from "@/shared/ui";
+import { HeroBackdrop } from "./HeroBackdrop";
 import { PhoneShowcase } from "./PhoneShowcase";
+
+/* Бегущая строка: проприетарные названия не переводятся (как «VISA» в мокапе) */
+const MARQUEE_WORDS = [
+  "Visa", "USDT", "USDC", "Apple Pay", "Google Pay", "eSIM", "Grab", "Hotels", "Flights", "Gift Cards",
+];
 
 export function Hero() {
   const t = useTranslations("hero");
 
   return (
-    <section className="relative overflow-hidden pt-32 pb-16 sm:pt-40 sm:pb-24">
-      {/* Один мягкий градиентный blob ≤ 20% opacity */}
-      <div className="hero-blob" />
+    <section className="relative overflow-hidden pt-32 sm:pt-40">
+      {/* Живой фон: сетка + орбы с mouse-параллаксом */}
+      <HeroBackdrop />
 
-      <div className="relative z-10 mx-auto max-w-[1200px] px-6">
+      <div className="relative z-10 mx-auto max-w-[1200px] px-6 pb-16 sm:pb-24">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Слева: текст */}
           <div>
@@ -34,10 +40,29 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Справа: живое демо приложения */}
-          <div>
+          {/* Справа: живое демо приложения (едет за курсором в противофазе с орбами) */}
+          <MouseParallax strength={-12}>
             <PhoneShowcase />
-          </div>
+          </MouseParallax>
+        </div>
+      </div>
+
+      {/* Бегущая строка: что принимает карта */}
+      <div className="mask-fade-x relative z-10 border-y border-[var(--border)] bg-white/60 py-3" aria-hidden="true">
+        <div className="marquee-track flex w-max items-center">
+          {[0, 1].map((copy) => (
+            <div key={copy} className="flex items-center">
+              {MARQUEE_WORDS.map((word) => (
+                <span
+                  key={`${copy}-${word}`}
+                  className="flex items-center font-mono text-xs font-medium uppercase tracking-[0.2em] text-[var(--text-3)]/80"
+                >
+                  <span className="px-6">{word}</span>
+                  <span className="h-1 w-1 rounded-full bg-[var(--primary)]/40" />
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </section>

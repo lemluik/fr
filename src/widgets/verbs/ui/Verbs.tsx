@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useScrollReveal } from "@/shared/hooks/useScrollReveal";
+import { useScrollParallax } from "@/shared/hooks/useParallax";
 
 type Verb = "pay" | "travel" | "send" | "save";
 
@@ -690,10 +691,21 @@ function VerbSection({ verb, flip }: VerbSectionProps) {
 
 export function Verbs() {
   const t = useTranslations("verbs");
+  const glow = useScrollParallax<HTMLDivElement>(0.06);
 
   return (
-    <section id="product" className="py-16 sm:py-24">
-      <div className="mx-auto max-w-[1200px] space-y-20 px-6 sm:space-y-28">
+    <section id="product" className="relative overflow-hidden py-16 sm:py-24">
+      {/* Мягкое свечение позади мокапов, едет со скроллом */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div ref={glow} className="absolute top-[12%] right-[-8%] h-[520px] w-[520px] will-change-transform">
+          <div
+            className="h-full w-full rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(74,108,247,0.10) 0%, transparent 62%)" }}
+          />
+        </div>
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-[1200px] space-y-20 px-6 sm:space-y-28">
         <div className="max-w-2xl">
           <span className="section-label">{t("label")}</span>
           <h2 className="mt-4 text-3xl font-bold tracking-tight text-[var(--text)] sm:text-4xl">{t("heading")}</h2>

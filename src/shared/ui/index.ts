@@ -4,3 +4,4 @@ export { Badge } from "./Badge";
 export { Card } from "./Card";
 export { Section } from "./Section";
 export { Logo, LogoMark } from "./Logo";
+export { MouseParallax } from "./MouseParallax";

@@ -81,14 +81,26 @@ export function FinalCta() {
 
   return (
     <section id="cta" className="dark-block relative overflow-hidden py-16 sm:py-24">
-      {/* Градиентная подложка ≤ 20% opacity */}
+      {/* Градиентная линия на границе со светлой секцией */}
+      <div className="gradient-hairline absolute inset-x-0 top-0" aria-hidden="true" />
+
+      {/* Подложка: статичный радиал + медленно пульсирующее свечение ≤ 20% opacity */}
       <div
         className="pointer-events-none absolute inset-0"
+        aria-hidden="true"
         style={{
           background:
             "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(74,108,247,0.20) 0%, transparent 65%)",
         }}
       />
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute left-1/2 top-1/2 h-[420px] w-[640px] -translate-x-1/2 -translate-y-1/2">
+          <div
+            className="glow-pulse h-full w-full rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(108,92,231,0.16) 0%, transparent 60%)" }}
+          />
+        </div>
+      </div>
 
       <div className="relative z-10 mx-auto max-w-[640px] px-6 text-center">
         <h2 className="text-[28px] font-bold leading-tight text-white sm:text-[44px] sm:leading-[1.2]">

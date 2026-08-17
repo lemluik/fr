@@ -284,20 +284,53 @@ function PayScreen({ t }: { t: (k: string) => string }) {
 
   return (
     <div className="flex h-full flex-col bg-[var(--bg)]">
-      {/* Затемнённый экран карты под sheet */}
-      <div className="relative flex-1 overflow-hidden rounded-b-2xl bg-[#0D1117]/[0.92] px-4 pt-3">
-        <p className="text-[11px] font-medium text-white/70">{t("payTitle")}</p>
-        <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.06] p-3">
-          <div className="flex items-center justify-between">
-            <span className="text-[9px] font-bold tracking-widest text-white/50">FRAMELESS</span>
-            <span className="text-[9px] font-extrabold italic text-white/50">VISA</span>
+      {/* Затемнённый экран карты под sheet — как настоящий bottom sheet поверх UI */}
+      <div className="relative flex-1 overflow-hidden rounded-b-2xl bg-[var(--bg)] px-4 pt-3">
+        {/* Контент экрана карты, виден сквозь затемнение */}
+        <div className="flex items-center gap-2">
+          <Icon d={PATHS.back} size={15} className="text-[var(--text-3)]" />
+          <p className="text-[13px] font-semibold text-[var(--text)]">{t("cardTitle")}</p>
+        </div>
+
+        <div className="fcard relative mt-3 overflow-hidden rounded-2xl p-3.5">
+          <div aria-hidden="true" className="absolute -right-10 -top-12 h-32 w-32 rounded-full bg-white/[0.06]" />
+          <div className="relative flex items-start justify-between">
+            <span className="text-[10px] font-bold tracking-widest text-white">FRAMELESS</span>
+            <VisaMark />
           </div>
-          <p className="mt-3 font-mono text-[11px] tracking-[0.14em] text-white/45">{t("cardNumber")}</p>
+          <div className="relative mt-3 flex items-center gap-2.5">
+            <span className="relative block h-5 w-7 overflow-hidden rounded-[4px] bg-gradient-to-br from-[#e8d9a8] to-[#c9a961]" aria-hidden="true">
+              <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[#8a6d3b]/60" />
+              <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-[#8a6d3b]/60" />
+            </span>
+            <Icon d={PATHS.contactless} size={14} className="text-white/70" />
+          </div>
+          <p className="relative mt-2.5 font-mono text-[13px] tracking-[0.14em] text-white/90">{t("cardNumber")}</p>
+          <div className="relative mt-2.5 flex items-end justify-between">
+            <div>
+              <p className="text-[7px] uppercase tracking-wider text-white/40">{t("cardHolderLabel")}</p>
+              <p className="text-[10px] font-medium tracking-wide text-white/85">ARTEM PETROV</p>
+            </div>
+            <div>
+              <p className="text-[7px] uppercase tracking-wider text-white/40">{t("cardExpiryLabel")}</p>
+              <p className="font-mono text-[10px] text-white/85">09/28</p>
+            </div>
+          </div>
         </div>
-        <div className="mt-3 space-y-1.5" aria-hidden="true">
-          <div className="h-2 w-3/4 rounded-full bg-white/10" />
-          <div className="h-2 w-1/2 rounded-full bg-white/[0.07]" />
+
+        <div className="mt-2.5 rounded-2xl border border-[var(--border)] bg-white p-3 shadow-sm">
+          <div className="flex items-center justify-between">
+            <p className="text-[9px] font-medium uppercase tracking-wider text-[var(--text-3)]">{t("cardBalanceLabel")}</p>
+            <span className="flex items-center gap-1 rounded-full bg-[var(--green)]/10 px-2 py-0.5 text-[9px] font-bold text-[var(--green)]">
+              <Icon d={PATHS.check} size={9} />
+              {t("cardDone")}
+            </span>
+          </div>
+          <p className="mt-1 font-mono text-[17px] font-bold tracking-tight text-[var(--text)]">{t("homeBalance")}</p>
         </div>
+
+        {/* Затемнение модалки */}
+        <div className="absolute inset-0 bg-[#0D1117]/60" aria-hidden="true" />
       </div>
 
       {/* Bottom sheet — основной паттерн подтверждений */}

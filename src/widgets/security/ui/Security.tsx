@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useScrollReveal } from "@/shared/hooks/useScrollReveal";
+import { useScrollParallax } from "@/shared/hooks/useParallax";
 
 /* Иконки: плоские, палитра бренда (без стоковых сейфов/замков) */
 const ICONS = {
@@ -27,6 +28,7 @@ const ICONS = {
 export function Security() {
   const t = useTranslations("security");
   const ref = useScrollReveal();
+  const glow = useScrollParallax<HTMLDivElement>(0.09);
   const [open, setOpen] = useState<number | null>(null);
 
   const claims = [
@@ -42,8 +44,19 @@ export function Security() {
   ];
 
   return (
-    <section id="security" className="dark-block-2 py-16 sm:py-24">
-      <div ref={ref} className="fade-up mx-auto max-w-[960px] px-6">
+    <section id="security" className="dark-block-2 relative overflow-hidden py-16 sm:py-24">
+      {/* Фон: сетка + холодное свечение со scroll-параллаксом */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="bg-grid-dark mask-fade-b absolute inset-0 opacity-70" />
+        <div ref={glow} className="absolute -top-32 left-[24%] h-[420px] w-[520px] will-change-transform">
+          <div
+            className="h-full w-full rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(74,108,247,0.14) 0%, transparent 62%)" }}
+          />
+        </div>
+      </div>
+
+      <div ref={ref} className="fade-up relative z-10 mx-auto max-w-[960px] px-6">
         <span className="section-label-dark">{t("label")}</span>
         <h2 className="mt-5 text-[28px] font-bold leading-tight text-white sm:text-[44px] sm:leading-[1.2]">
           {t("title")}

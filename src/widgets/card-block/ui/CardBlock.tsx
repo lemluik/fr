@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useScrollReveal } from "@/shared/hooks/useScrollReveal";
+import { useScrollParallax } from "@/shared/hooks/useParallax";
 
 /* Лёгкий 3D-tilt за курсором: только desktop, амплитуда ≤ 6°,
    отключается при prefers-reduced-motion */
@@ -53,6 +54,8 @@ function TiltCard() {
 export function CardBlock() {
   const t = useTranslations("card");
   const ref = useScrollReveal();
+  const glowA = useScrollParallax<HTMLDivElement>(0.1);
+  const glowB = useScrollParallax<HTMLDivElement>(-0.07);
 
   const features = [
     { title: t("f1Title"), desc: t("f1Desc") },
@@ -62,8 +65,28 @@ export function CardBlock() {
   const bullets = [t("b1"), t("b2"), t("b3"), t("b4")];
 
   return (
-    <section id="card" className="dark-block overflow-hidden py-16 sm:py-24">
-      <div ref={ref} className="fade-up mx-auto max-w-[1200px] px-6">
+    <section id="card" className="dark-block relative overflow-hidden py-16 sm:py-24">
+      {/* Градиентная линия на границе со светлой секцией */}
+      <div className="gradient-hairline absolute inset-x-0 top-0" aria-hidden="true" />
+
+      {/* Фон: сетка + свечения, едущие со скроллом на разных скоростях */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="bg-grid-dark mask-fade-b absolute inset-0" />
+        <div ref={glowA} className="absolute -top-48 right-[6%] h-[480px] w-[480px] will-change-transform">
+          <div
+            className="glow-pulse h-full w-full rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(108,92,231,0.22) 0%, transparent 60%)" }}
+          />
+        </div>
+        <div ref={glowB} className="absolute -bottom-40 left-[2%] h-[420px] w-[420px] will-change-transform">
+          <div
+            className="h-full w-full rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(74,108,247,0.18) 0%, transparent 60%)" }}
+          />
+        </div>
+      </div>
+
+      <div ref={ref} className="fade-up relative z-10 mx-auto max-w-[1200px] px-6">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-16">
           {/* Текст и сценарий */}
           <div>

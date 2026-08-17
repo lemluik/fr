@@ -48,13 +48,56 @@ body {
   background-clip: text;
 }
 
-/* ── Hero: светлый, один мягкий blob ≤ 20% opacity ── */
-.hero-blob {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 55% 45% at 78% 18%, rgba(74,108,247,0.14) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 40% at 12% 70%, rgba(108,92,231,0.10) 0%, transparent 65%);
-  pointer-events: none; z-index: 0;
+/* ── Hero: живой фон — сетка + орбы ≤ 20% opacity (mouse-параллакс в HeroBackdrop) ── */
+.bg-grid-light {
+  background-image:
+    linear-gradient(to right, rgba(26,31,54,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26,31,54,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.bg-grid-dark {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.mask-fade-hero {
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, #000 30%, transparent 78%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, #000 30%, transparent 78%);
+}
+.mask-fade-b {
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 92%);
+  mask-image: linear-gradient(to bottom, #000 35%, transparent 92%);
+}
+.mask-fade-x {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* ── Дрейф орбов и пульс свечения (только CSS-анимация; transform снаружи не трогать) ── */
+.orb-drift { animation: orb-drift 14s ease-in-out infinite; }
+.orb-drift-slow { animation: orb-drift 22s ease-in-out infinite reverse; }
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-18px, 14px) scale(1.05); }
+}
+.glow-pulse { animation: glow-pulse 7s ease-in-out infinite; }
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.06); }
+}
+
+/* ── Бегущая строка (бренд-слова, бесшовный цикл) ── */
+.marquee-track { animation: marquee 36s linear infinite; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Градиентная линия-разделитель на границе светлых и тёмных секций ── */
+.gradient-hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(74,108,247,0.4) 30%, rgba(108,92,231,0.4) 70%, transparent);
 }
 
 /* ── Surfaces ── */

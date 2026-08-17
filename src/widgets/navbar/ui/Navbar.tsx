@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useParams, usePathname } from "next/navigation";
 import { cn } from "@/shared/lib/cn";
@@ -18,6 +18,31 @@ export function Navbar() {
   const locale = params.locale as string;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
+
+  /* Тень при прокрутке + прогресс-бар (ширина пишется в DOM без ре-рендера) */
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      setScrolled(window.scrollY > 8);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      if (barRef.current) barRef.current.style.width = `${(p * 100).toFixed(2)}%`;
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   const switchLocale = (newLocale: string) => {
     const segments = pathname.split("/");
@@ -39,7 +64,12 @@ export function Navbar() {
 
   return (
     <>
-      <header className="navbar-blur fixed top-0 left-0 right-0 z-50">
+      <header
+        className={cn(
+          "navbar-blur fixed top-0 left-0 right-0 z-50 transition-shadow duration-300",
+          scrolled && "shadow-[0_8px_30px_-12px_rgba(26,31,54,0.18)]"
+        )}
+      >
         <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-5 sm:px-6">
           {wordmark}
 
@@ -105,6 +135,13 @@ export function Navbar() {
             </button>
           </div>
         </div>
+
+        {/* Прогресс чтения страницы */}
+        <div
+          ref={barRef}
+          className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[var(--primary)] to-[var(--primary-end)]"
+          aria-hidden="true"
+        />
       </header>
 
       {/* Mobile menu overlay */}
