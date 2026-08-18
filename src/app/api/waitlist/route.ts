@@ -40,46 +40,36 @@ function sanitizeInt(val: unknown): number | null {
   return isNaN(n) || n < 0 || n > 10000 ? null : n;
 }
 
-// ─── Telegram уведомление ─────────────────────────────────────────────────────
+// ─── Telegram: единственный пункт назначения заявок ───────────────────────────
 const TG_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN ?? "";
 const TG_CHAT_ID   = process.env.TELEGRAM_CHAT_ID ?? "";
 
-async function sendTelegramNotification(data: {
-  email: string;
-  country: string | null;
-  city: string | null;
-  timezone: string | null;
-  locale: string;
-  utm_source: string | null;
-  referrer: string | null;
-  residence: string | null;
-  priority: string | null;
-}) {
-  const flag = data.country ? getFlagEmoji(data.country) : "🌍";
-  const location = [data.city, data.country].filter(Boolean).join(", ") || "неизвестно";
-  const source = data.utm_source ?? safeReferrerHost(data.referrer);
+/* Человекочитаемые подписи кодов из формы */
+const PRIORITY_LABELS: Record<string, string> = {
+  pr1: "Карта",
+  pr2: "Переводы",
+  pr3: "eSIM и travel",
+  pr4: "Налоги",
+};
+const RESIDENCE_LABELS: Record<string, string> = {
+  th: "Таиланд",
+  ae: "ОАЭ",
+  ge: "Грузия",
+  tr: "Турция",
+  vn: "Вьетнам",
+  other: "Другая страна",
+};
 
-  const text = [
-    `🎯 *Новая регистрация в waitlist*`,
-    ``,
-    `📧 \`${data.email}\``,
-    `${flag} ${location}`,
-    `🏠 Живёт: ${data.residence ?? "—"}`,
-    `⭐ Приоритет: ${data.priority ?? "—"}`,
-    `🕐 ${data.timezone ?? "—"}`,
-    `🌐 Язык: ${data.locale}`,
-    `📌 Источник: ${source}`,
-  ].join("\n");
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
 
-  await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: TG_CHAT_ID,
-      text,
-      parse_mode: "Markdown",
-    }),
-  }).catch((e) => console.error("TG error:", e?.message));
+function getFlagEmoji(countryCode: string): string {
+  return countryCode
+    .toUpperCase()
+    .split("")
+    .map((c) => String.fromCodePoint(0x1F1E6 - 65 + c.charCodeAt(0)))
+    .join("");
 }
 
 function safeReferrerHost(referrer: string | null): string {
@@ -101,14 +91,63 @@ function safeDecodeCity(raw: string | null): string | null {
   }
 }
 
-function getFlagEmoji(countryCode: string): string {
-  return countryCode
-    .toUpperCase()
-    .split("")
-    .map((c) => String.fromCodePoint(0x1F1E6 - 65 + c.charCodeAt(0)))
-    .join("");
-}
+async function sendTelegramNotification(data: {
+  email: string;
+  country: string | null;
+  city: string | null;
+  timezone: string | null;
+  locale: string;
+  utm_source: string | null;
+  utm_medium: string | null;
+  utm_campaign: string | null;
+  referrer: string | null;
+  residence: string | null;
+  priority: string | null;
+  screen_w: number | null;
+  user_agent: string | null;
+}): Promise<boolean> {
+  const flag = data.country ? getFlagEmoji(data.country) : "🌍";
+  const location = [data.city, data.country].filter(Boolean).join(", ") || "неизвестно";
+  const source = data.utm_source ?? safeReferrerHost(data.referrer);
+  const utm = [data.utm_source, data.utm_medium, data.utm_campaign].filter(Boolean).join(" / ") || null;
+  const stamp = new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" });
 
+  const lines = [
+    "🎯 <b>Новая заявка в waitlist Frameless</b>",
+    "",
+    `📧 <b>${escapeHtml(data.email)}</b>`,
+    `${flag} Гео: ${escapeHtml(location)}`,
+    `🏠 Резидентство: ${data.residence ? escapeHtml(RESIDENCE_LABELS[data.residence] ?? data.residence) : "—"}`,
+    `⭐ Приоритет: ${data.priority ? escapeHtml(PRIORITY_LABELS[data.priority] ?? data.priority) : "—"}`,
+    `🌐 Язык: ${escapeHtml(data.locale)} · 🕐 ${escapeHtml(data.timezone ?? "—")}`,
+    `📌 Источник: ${escapeHtml(source)}${utm ? ` (${escapeHtml(utm)})` : ""}`,
+  ];
+  if (data.screen_w !== null) lines.push(`🖥 Экран: ${data.screen_w}px`);
+  if (data.user_agent) lines.push(`🤖 UA: ${escapeHtml(data.user_agent)}`);
+  lines.push("", `🕑 ${stamp} МСК`);
+
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: TG_CHAT_ID,
+        text: lines.join("\n"),
+        parse_mode: "HTML",
+        disable_web_page_preview: true,
+      }),
+    });
+    const json = await res.json().catch(() => null);
+    if (!res.ok || !json?.ok) {
+      console.error("Telegram sendMessage failed:", res.status, JSON.stringify(json));
+      return false;
+    }
+    return true;
+  } catch (e) {
+    console.error("Telegram error:", (e as Error)?.message);
+    return false;
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -165,92 +204,34 @@ export async function POST(req: NextRequest) {
     const city       = safeDecodeCity(req.headers.get("x-vercel-ip-city"));
     const user_agent = sanitize(req.headers.get("user-agent"), 300);
 
-    // ── Запись в Supabase ──────────────────────────────────────────────────────
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-    if (!supabaseUrl || !supabaseKey) {
-      console.error("Missing Supabase env vars: SUPABASE_URL and/or SUPABASE_SERVICE_ROLE_KEY");
+    // ── Отправка в Telegram-группу (единственное хранилище заявок) ────────────
+    if (!TG_BOT_TOKEN || !TG_CHAT_ID) {
+      console.error("Missing Telegram env vars: TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID");
       return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
     }
 
-    const row = {
+    const sent = await sendTelegramNotification({
       email: rawEmail,
-      locale,
       country,
       city,
       timezone,
-      referrer,
+      locale,
       utm_source,
       utm_medium,
       utm_campaign,
-      user_agent,
-      screen_w,
+      referrer,
       residence,
       priority,
-    };
-
-    const postOpts = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": supabaseKey,
-        "Authorization": `Bearer ${supabaseKey}`,
-        "Prefer": "return=minimal",
-      },
-    };
-
-    // Новые колонки residence/priority могут отсутствовать в схеме —
-    // в этом случае повторяем запись без них.
-    let res = await fetch(`${supabaseUrl}/rest/v1/waitlist`, {
-      ...postOpts,
-      body: JSON.stringify(row),
+      screen_w,
+      user_agent,
     });
-    if (!res.ok && res.status === 400) {
-      const legacyRow = Object.fromEntries(
-        Object.entries(row).filter(([k]) => k !== "residence" && k !== "priority")
-      );
-      res = await fetch(`${supabaseUrl}/rest/v1/waitlist`, {
-        ...postOpts,
-        body: JSON.stringify(legacyRow),
-      });
+
+    if (!sent) {
+      return NextResponse.json({ error: "Server error" }, { status: 500 });
     }
 
-    if (res.ok) {
-      // Позиция в списке = общее число подписчиков (для success-state)
-      let position: number | null = null;
-      try {
-        const countRes = await fetch(
-          `${supabaseUrl}/rest/v1/waitlist?select=email&limit=1`,
-          {
-            headers: {
-              "apikey": supabaseKey,
-              "Authorization": `Bearer ${supabaseKey}`,
-              "Prefer": "count=exact",
-              "Range": "0-0",
-            },
-          }
-        );
-        const range = countRes.headers.get("content-range");
-        const total = range?.split("/")[1];
-        if (total && /^\d+$/.test(total)) position = Number(total);
-      } catch {
-        // позиция не критична
-      }
-
-      if (TG_BOT_TOKEN && TG_CHAT_ID) {
-        await sendTelegramNotification({ email: rawEmail, country, city, timezone, locale, utm_source, referrer, residence, priority });
-      }
-      return NextResponse.json({ success: true, position });
-    }
-
-    if (res.status === 409) {
-      return NextResponse.json({ duplicate: true }, { status: 409 });
-    }
-
-    const err = await res.text();
-    console.error("Supabase error:", res.status, err);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    // Без базы данных позиции в очереди нет — фронт показывает successNoPosition
+    return NextResponse.json({ success: true });
 
   } catch (e) {
     console.error("Waitlist error:", e);
