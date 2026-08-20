@@ -70,8 +70,15 @@ export function Footer() {
 
       {/* Копирайт */}
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-6">
+        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-3 px-6 py-6">
           <p className="text-xs text-white/40">&copy; {new Date().getFullYear()} Frameless. {t("rights")}</p>
+          <a
+            href={`mailto:${t("email")}`}
+            aria-label={t("contact")}
+            className="text-xs text-white/40 transition-colors hover:text-white"
+          >
+            {t("email")}
+          </a>
         </div>
       </div>
     </footer>
